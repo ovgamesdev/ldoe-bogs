@@ -1,0 +1,21 @@
+{
+  "name": "LDOE Bogs — Interactive Map",
+  "short_name": "LDOE Bogs",
+  "description": "Interactive map for Last Day on Earth: Survival (LDOE). Track locations, loot, bosses, and zones across the Swamp Forest and Wild Bogs.",
+  "start_url": "/ldoe-bogs/en/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#0a0a0a",
+  "icons": [
+    {
+      "src": "/ldoe-bogs/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/ldoe-bogs/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

@@ -1,0 +1,350 @@
+/* Подключение стилей Leaflet и шрифтов */
+@import "leaflet/dist/leaflet.css";
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
+  background-color: #1a1a1a;
+  user-select: none;
+}
+
+#map {
+  height: 100vh;
+  height: 100dvh;
+  width: 100%;
+  background: #1a1a1a;
+}
+
+.leaflet-container {
+  font-family: 'Inter', sans-serif;
+  background: #1a1a1a;
+}
+
+.leaflet-popup {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.leaflet-marker-icon {
+  image-rendering: pixelated;
+}
+
+/* Названия локаций */
+.location-title {
+  background: none !important;
+  border: none !important;
+  z-index: 650 !important;
+}
+
+.location-title div {
+  font-family: 'Russo One', sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  white-space: nowrap;
+  text-align: center;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-shadow: 
+    -1px -1px 0 #000,  
+     1px -1px 0 #000,
+    -1px  1px 0 #000,
+     1px  1px 0 #000,
+     0px  2px 4px rgba(0,0,0,0.8);
+  letter-spacing: 1px;
+}
+
+/* Попапы Leaflet */
+/* .leaflet-popup-content-wrapper, .leaflet-popup-tip {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+} */
+
+.leaflet-popup-content {
+  font-family: 'Inter', sans-serif;
+  color: #333;
+  margin: 0;
+  padding: 13px 20px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.leaflet-popup-content::-webkit-scrollbar {
+  width: 4px;
+}
+.leaflet-popup-content::-webkit-scrollbar-thumb {
+  background: #a0a0a0;
+  border-radius: 4px;
+}
+
+/* Содержимое попапов */
+.popup-container-center {
+  text-align: center;
+}
+.popup-main-title {
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.popup-image-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+}
+.popup-loot-img {
+  width: 160px;
+  object-fit: contain;
+  border-radius: 6px;
+  cursor: zoom-in;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.popup-loot-img:hover {
+  opacity: 0.9;
+  transform: scale(1.02);
+}
+.popup-loot-body {
+  text-align: left;
+  margin-top: 10px;
+  font-size: 13px;
+}
+.popup-section-title {
+  font-weight: 700;
+  margin-top: 8px;
+  color: #111;
+}
+.popup-loot-list {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  list-style: none;
+  padding-left: 0;
+  margin: 4px 0;
+  color: #4a4a4a;
+}
+.popup-loot-sublist {
+  list-style: none;
+  padding-left: 12px;
+  margin: 2px 0;
+}
+.popup-wiki-wrapper {
+  margin-top: 6px;
+  text-align: right;
+}
+.popup-wiki-link {
+  font-size: 11px;
+  color: #007bff;
+  text-decoration: none;
+}
+.popup-wiki-link:hover {
+  text-decoration: underline;
+}
+
+/* Верхний UI Панели управления ПК */
+.top-desktop-ui {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  max-width: 260px;
+}
+
+.map-selector-pc select {
+  width: 100%;
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.lang-controls-pc {
+  display: flex;
+  gap: 6px;
+}
+.lang-btn {
+  flex: 1;
+  padding: 6px;
+  border: none;
+  background: #e0e0e0;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.lang-btn.active {
+  background: #007bff;
+  color: white;
+}
+
+.action-btns {
+  display: flex;
+  gap: 6px;
+}
+.action-btn {
+  flex: 1;
+  padding: 6px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  background: #333;
+  color: white;
+}
+.action-btn:hover {
+  background: #555;
+}
+
+.filter-list-pc {
+  max-height: 320px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-right: 4px;
+}
+.filter-item-pc {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+/* Детектор координат курсора */
+.coords-info {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 6px 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  border-radius: 6px;
+  pointer-events: none;
+}
+
+/* Мобильный интерфейс */
+/* .fab-filter-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 30px;
+  font-weight: bold;
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+} */
+
+/* .bottom-sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 2000;
+} */
+
+/* .bottom-sheet {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  z-index: 2001;
+  padding: 16px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease-out;
+} */
+
+/* @keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+} */
+
+/* .bottom-sheet-handle {
+  width: 40px;
+  height: 5px;
+  background: #ccc;
+  border-radius: 3px;
+  margin: 0 auto 12px;
+} */
+
+/* .bottom-sheet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+} */
+
+/* .bottom-sheet-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+  overflow-y: auto;
+  padding-bottom: 20px;
+} */
+
+.marker-item-mobile {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  background: #f4f4f5;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Модальное окно картинки */
+.image-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(5px);
+  cursor: zoom-out;
+}
+
+.image-modal img {
+  max-width: 90vw;
+  max-height: 85vh;
+  border-radius: 8px;
+  box-shadow: 0 0 25px rgba(0,0,0,0.5);
+}
+
+@media (min-width: 768px) {
+  .fab-filter-btn, .mobile-header-bar {
+    display: none !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .top-desktop-ui {
+    display: none !important;
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "LDOE Болота — Интерактивная карта",
+  "short_name": "LDOE Болота",
+  "description": "Интерактивная карта локаций игры Last Day on Earth: Survival (LDOE) — Заболоченный лес и Дикие топи: лут, боссы, зоны спавна и маршруты.",
+  "start_url": "/ldoe-bogs/ru/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#0a0a0a",
+  "icons": [
+    {
+      "src": "/ldoe-bogs/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/ldoe-bogs/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

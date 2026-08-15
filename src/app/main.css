@@ -1,0 +1,473 @@
+@import "mobile-layout.css";
+@import "style.css";
+
+/* Подключаем Inter и JetBrains Mono через Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;500&family=Russo+One&display=swap');
+
+/* Ваши остальные стили */
+
+
+
+body {
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	font-family: 'Inter', sans-serif;
+}
+
+.leaflet-container {
+	font-family: 'Inter', sans-serif;
+}
+
+.leaflet-popup {
+	font-family: 'JetBrains Mono', monospace;
+}
+
+/* 1. Базовый шрифт для всего попапа (чисто и читабельно) */
+.leaflet-popup-content {
+    font-family: 'Inter', sans-serif;
+    color: #333; /* Или белый/светло-серый, если у тебя темная тема попапов */
+
+		/* margin-right: 0px; */
+		margin: 0px;
+		padding: 13px 24px 13px 20px;
+		max-height: 280px; 
+    overflow-y: auto;  /* Включаем вертикальный скролл */
+    overflow-x: hidden;
+    /* padding-right: calc(24px + 5px); Немного отступа, чтобы текст не прилипал к скроллбару */
+}
+
+/* Делаем скроллбар тонким и аккуратным (в стиле мобильных интерфейсов) */
+.leaflet-popup-content::-webkit-scrollbar {
+    width: 4px;
+}
+.leaflet-popup-content::-webkit-scrollbar-track {
+    background: transparent; 
+}
+.leaflet-popup-content::-webkit-scrollbar-thumb {
+    background: #a0a0a0; 
+    border-radius: 4px;
+}
+
+/* 2. Стилизация всех жирных текстов (заголовки ящиков, подписи "Пример лута") */
+.leaflet-popup-content b {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+}
+
+/* 3. Стилизация самого первого главного заголовка (название локации/ящика) под брутальный стиль LDOE */
+.leaflet-popup-content > div > b:first-child {
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+/* 4. Списки лута и цифры (моноширинный шрифт) */
+.leaflet-popup-content ul {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; 
+    font-weight: 500;
+    /* Немного приглушаем цвет самого списка лута, чтобы он не сливался с заголовками */
+    color: #4a4a4a; 
+}
+
+/* Переопределяем цвет для темной темы (если попапы у тебя темные) */
+/*
+.leaflet-popup-content { color: #eaeaea; }
+.leaflet-popup-content ul { color: #cccccc; }
+*/
+
+#map {
+	height: 100vh;
+	height: 100dvh;
+	width: 100%;
+	background: #1a1a1a;
+}
+
+/* Стиль для того, чтобы картинки-иконки выглядели четко */
+.leaflet-marker-icon {
+	image-rendering: pixelated;
+}
+
+/* Стиль для названий локаций */
+.location-title {
+	background: none !important;
+	border: none !important;
+	z-index: 1000 !important;
+}
+
+.location-title div {
+	font-family: 'Russo One', sans-serif;
+	font-size: 20px;
+	font-weight: bold;
+	white-space: nowrap;
+	text-align: center;
+	text-transform: uppercase; /* Делает все буквы заглавными для стиля */
+	color: #ffffff;            /* Белый цвет текста */
+	
+	/* Мощная черная обводка, чтобы текст "читался" на любом тайле карты */
+	text-shadow: 
+			-1px -1px 0 #000,  
+				1px -1px 0 #000,
+			-1px  1px 0 #000,
+				1px  1px 0 #000,
+				0px  2px 4px rgba(0,0,0,0.8); 
+				
+	letter-spacing: 1px;       /* Небольшой отступ между буквами для читаемости */
+}
+
+.leaflet-popup-content-wrapper, .leaflet-popup-tip {
+	background: rgba(255, 255, 255, 0.9);
+	backdrop-filter: blur(10px);
+	/* border-radius: 12px; */
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* КОНТЕЙНЕР УПРАВЛЕНИЯ (БАЗОВЫЙ) */
+.map-ui-container {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	pointer-events: none;
+	/* Пропускает клики к карте сквозь пустые зоны */
+}
+
+.map-controls {
+	background: rgba(255, 255, 255, 0.9);
+	backdrop-filter: blur(10px);
+	padding: 8px;
+	border-radius: 12px;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+	display: flex;
+	gap: 8px;
+	flex-direction: column;
+	pointer-events: auto;
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.map-btn {
+	cursor: pointer;
+	padding: 5px 10px;
+	background: #444;
+	color: white;
+	border: none;
+	border-radius: 3px;
+	font-size: 12px;
+	transition: background 0.3s;
+	touch-action: manipulation;
+}
+
+.map-btn:hover {
+	background: #666;
+}
+
+/* lang-controls */
+.lang-controls {
+	/* background: white; */
+	padding: 5px;
+	/* border-radius: 5px; */
+	/* padding-bottom: 6px; */
+	display: flex;
+	gap: 4px;
+	/* justify-content: space-between; */
+}
+
+.lang-controls .map-btn {
+	flex: 1;
+}
+
+.coords-info {
+	background: rgba(0, 0, 0, 0.7);
+	color: white;
+	padding: 5px 10px;
+	font-family: 'JetBrains Mono', monospace;
+	border-radius: 3px;
+	pointer-events: none;
+	/* Чтобы плашка не перехватывала клики */
+}
+
+/* Кнопка шестеренки (ПО УМОЛЧАНИЮ СКРЫТА НА ПК) */
+.settings-toggle {
+	display: none;
+	width: 44px;
+	height: 44px;
+	background: #333;
+	color: white;
+	border: none;
+	border-radius: 50%;
+	font-size: 24px;
+	cursor: pointer;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+	pointer-events: auto;
+	justify-content: center;
+	align-items: center;
+}
+
+.desktop-cursor {
+	cursor: crosshair;
+}
+
+/* Стили для полноэкранного просмотра картинки */
+.image-modal {
+	display: none;
+	position: fixed;
+	z-index: 9999;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.9);
+	align-items: center;
+	justify-content: center;
+	cursor: zoom-out;
+}
+
+.image-modal img {
+	max-width: 90%;
+	max-height: 90%;
+	border-radius: 8px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+	cursor: default;
+}
+
+/*  */
+/*  */
+/*  */
+/*  */
+
+/* --- СТИЛИ ДЛЯ ВСЕХ УСТРОЙСТВ --- */
+
+/* Стилизация стандартного меню слоев Leaflet (справа вверху) */
+.map-controls .leaflet-control-layers {
+	position: static !important;
+	margin: 0 !important;
+	background: none !important;
+	border: none !important;
+	box-shadow: none !important;
+}
+
+.map-controls .leaflet-control-layers-toggle {
+	display: none !important;
+}
+
+/* Прячем родную кнопку */
+/* Стилизация развернутого меню слоев */
+.map-controls .leaflet-control-layers-expanded {
+	display: block !important;
+	/* padding: 5px 0 0 0 !important; */
+	background: none !important;
+	max-height: 80vh;
+	overflow-y: auto;
+}
+
+/* Ограничиваем высоту списка слоев, чтобы он не уходил за экран */
+.leaflet-control-layers-scrollbar {
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding-right: 5px;
+}
+
+/* РЕЖИМ: ШИРОКИЙ ЭКРАН (ПК) — управляется классом .ui-wide */
+.map-ui-wrapper.ui-wide .settings-toggle {
+	display: none;
+}
+
+.map-ui-wrapper.ui-wide .map-controls {
+	display: flex !important;
+	/* flex-direction: row; */
+	/* align-items: center; */
+	/* opacity: 1; */
+	/* transform: none; */
+}
+
+.map-ui-wrapper.ui-wide .lang-controls {
+	border-bottom: none;
+	border-right: 1px solid #ddd;
+	padding-bottom: 0;
+	padding-right: 8px;
+}
+
+.map-ui-wrapper.ui-wide .leaflet-control-layers-expanded {
+	max-height: unset !important;
+}
+
+/* РЕЖИМ: УЗКИЙ ЭКРАН (Мобильный или свернутое окно) — управляется классом .ui-compact */
+.map-ui-wrapper.ui-compact {
+	display: flex;
+	flex-direction: column-reverse;
+	align-items: end;
+	gap: 5px;
+}
+
+.map-ui-wrapper.ui-compact .settings-toggle {
+	display: flex;
+}
+
+.map-ui-wrapper.ui-compact .map-controls {
+	display: none;
+	/* Прячем за шестеренку */
+	min-width: 180px;
+}
+
+.map-ui-wrapper.ui-compact .map-controls.active {
+	display: flex;
+}
+
+.ui-compact-zoom .coords-info {
+	display: none;
+}
+
+/*  */
+/*  */
+/*  */
+/*  */
+
+/* Общие контейнеры для попапов Leaflet */
+.popup-width-sm {
+    width: 191px !important;
+}
+
+.popup-width-md {
+    width: 301px !important;
+}
+
+.popup-container-center {
+    text-align: center;
+}
+
+/* Специфика лута во втором попапе (выравнивание по левому краю) */
+.popup-loot-body {
+    text-align: left;
+    margin-top: 10px;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+/* Заголовки */
+.popup-main-title {
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.popup-section-title {
+    font-weight: 600;
+    margin-top: 8px;
+}
+
+.popup-footer-title {
+    font-weight: 600;
+    font-size: 13px;
+    display: block;
+    margin-top: 5px;
+}
+
+/* Изображения в попапах */
+.popup-image-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.popup-loot-img {
+    width: 150px;
+    aspect-ratio: 600 / 470;
+    object-fit: contain;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    display: block;
+    cursor: zoom-in;
+    transition: opacity 0.2s ease;
+}
+
+.popup-loot-img:hover {
+    opacity: 0.9;
+}
+
+/* Списки с характеристиками */
+.popup-loot-list {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 4px 0;
+}
+
+.popup-loot-list li {
+    margin-bottom: 2px;
+}
+
+/* Блок ссылки на Вики */
+.popup-wiki-wrapper {
+    margin-top: 5px;
+    text-align: right;
+}
+
+.popup-wiki-link {
+    font-size: 11px;
+    color: #3498db;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.popup-wiki-link:hover {
+    color: #2980b9;
+    text-decoration: underline;
+}
+
+/* Вложенный список для пула групповых предметов */
+.popup-loot-sublist {
+    list-style-type: none;
+    padding-left: 15px;
+    margin: 2px 0;
+}
+.popup-loot-sublist li {
+    margin-bottom: 1px;
+}
+
+/*  */
+/*  */
+/*  */
+/*  */
+
+/* Стили для панели рисования полигонов (Dev) */
+.dev-draw-panel {
+	background: rgba(0, 0, 0, 0.8);
+	padding: 10px;
+	border-radius: 8px;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	color: white;
+	font-family: 'JetBrains Mono', monospace;
+	pointer-events: auto;
+}
+
+.dev-draw-btn {
+	padding: 6px 12px;
+	background: #4CAF50;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-weight: bold;
+}
+
+.dev-draw-btn:hover {
+	filter: brightness(1.1);
+}
+
+.dev-draw-btn.stop {
+	background: #f44336;
+}
+
+.dev-draw-btn.undo {
+	background: #ff9800;
+}
+
+.dev-draw-btn:disabled {
+	background: #555;
+	cursor: not-allowed;
+}
+
+.dev-point-count {
+	font-size: 14px;
+	text-align: center;
+}
