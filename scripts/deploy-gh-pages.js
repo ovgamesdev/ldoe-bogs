@@ -1,7 +1,11 @@
 import { spawnSync } from "child_process"
 import { cpSync, existsSync, mkdirSync, readdirSync, rmSync } from "fs"
 import { tmpdir } from "os"
-import { join, resolve } from "path"
+import { dirname, join, resolve } from "path"
+import { fileURLToPath } from "url"
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const ROOT = resolve(__dirname, "..");
 const OUT_DIR = join(ROOT, "out");
