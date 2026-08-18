@@ -31,7 +31,8 @@
             {
                 "id": "top_left",
                 "x": 17480,
-                "y": 14636
+                "y": 14636,
+                "verified": true
             },
             {
                 "id": "top_right",
@@ -152,7 +153,8 @@
             {
                 "id": "top_right",
                 "x": 28834,
-                "y": 15697
+                "y": 15697,
+                "verified": true
             },
             {
                 "id": "right",
@@ -256,7 +258,8 @@
             {
                 "id": "right",
                 "x": 42036,
-                "y": 24119
+                "y": 24119,
+                "verified": true
             },
             {
                 "id": "center",
@@ -346,7 +349,8 @@
             {
                 "id": "center",
                 "x": 22739,
-                "y": 27776
+                "y": 27776,
+                "verified": true
             },
             {
                 "id": "bottom",
@@ -442,7 +446,8 @@
             {
                 "id": "bottom",
                 "x": 19779,
-                "y": 39226
+                "y": 39226,
+                "verified": true
             },
             {
                 "id": "left",
@@ -547,7 +552,8 @@
             {
                 "id": "left",
                 "x": 8684,
-                "y": 28111
+                "y": 28111,
+                "verified": true
             }
         ]
     }

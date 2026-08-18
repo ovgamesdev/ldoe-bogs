@@ -433,6 +433,12 @@ interface AreaPositionMarkerProps {
   onResetRotation: (areaId: string) => void;
   // Только в dev: сохраняет текущий поворот как базовый в areas.json.
   onSaveRotation?: (areaId: string) => void;
+  // Проверены ли дев-ом данные ТЕКУЩЕЙ позиции (AreaPositionOffset.verified) —
+  // свойство самих данных, не путать с confirmed (см. комментарий в
+  // initial-data.ts). Показываем badge только в dev-режиме.
+  verified: boolean;
+  // Только в dev: переключает verified для текущей позиции.
+  onToggleVerified?: (areaId: string) => void;
 }
 
 // Содержимое попапа позиции area — вынесено отдельно, чтобы одинаково
@@ -454,6 +460,8 @@ interface AreaPositionPopupContentProps {
   onRotate: (areaId: string, delta: number) => void;
   onResetRotation: (areaId: string) => void;
   onSaveRotation?: (areaId: string) => void;
+  verified: boolean;
+  onToggleVerified?: (areaId: string) => void;
 }
 
 const AreaPositionPopupContent: React.FC<AreaPositionPopupContentProps> = ({
@@ -472,6 +480,8 @@ const AreaPositionPopupContent: React.FC<AreaPositionPopupContentProps> = ({
   onRotate,
   onResetRotation,
   onSaveRotation,
+  verified,
+  onToggleVerified,
 }) => {
   const { t } = useLanguage();
   const otherPositions = positions.filter((p) => p.id !== currentPositionId);
@@ -515,6 +525,24 @@ const AreaPositionPopupContent: React.FC<AreaPositionPopupContentProps> = ({
         )}
       </div>
 
+      {/* Dev-only: точность данных этой позиции (x/y/rotation в areas.json) —
+          не путать с confirmed выше (это отдельное состояние игрока про
+          текущую позицию area). verified защищает данные от случайной правки:
+          drag area / "Сохранить поворот как базовый" запрашивают подтверждение,
+          если позиция уже помечена проверенной. */}
+      {isDev && (
+        <div style={{ borderTop: '1px solid #444', paddingTop: 6, display: 'flex', flexDirection: 'column', gap: 4 }}>
+          <div style={{ fontWeight: 'bold', color: verified ? '#2e7d32' : '#c62828' }}>
+            {verified ? `🔒 ${t('data_verified')}` : `⚠️ ${t('data_unverified')}`}
+          </div>
+          {onToggleVerified && (
+            <button className="map-btn map-btn-sm" onClick={() => onToggleVerified(areaId)}>
+              {verified ? `🔓 ${t('mark_unverified')}` : `🔒 ${t('mark_verified')}`}
+            </button>
+          )}
+        </div>
+      )}
+
       <div style={{ fontSize: 12, color: '#999', marginTop: 4 }}>{t('switch_to')}:</div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 4, maxHeight: 170 }}>
         {otherPositions.map((p) => {
@@ -550,21 +578,30 @@ const AreaPositionMarkerComponent: React.FC<AreaPositionMarkerProps> = ({
   onRotate,
   onResetRotation,
   onSaveRotation,
+  verified,
+  onToggleVerified,
 }) => {
   const position = useMemo(
     () => L.CRS.Simple.pointToLatLng(L.point(centerX, centerY), maxZoom),
     [centerX, centerY, maxZoom]
   );
 
+  // В dev-режиме добавляем маленький замочек в угол маркера, если данные
+  // текущей позиции помечены проверенными — чтобы видеть это сразу на карте,
+  // не открывая попап (см. verified в AreaPositionOffset).
   const icon = useMemo(() => L.divIcon({
     className: 'area-position-marker',
     html: `<div style="width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-             font-size:15px;font-weight:bold;color:#fff;cursor:pointer;
+             font-size:15px;font-weight:bold;color:#fff;cursor:pointer;position:relative;
              background:${confirmed ? 'rgba(46,125,50,0.92)' : 'rgba(198,40,40,0.92)'};
-             border:2px solid #fff;box-shadow:0 0 5px rgba(0,0,0,0.7);">${confirmed ? '✓' : '?'}</div>`,
+             border:2px solid #fff;box-shadow:0 0 5px rgba(0,0,0,0.7);">${confirmed ? '✓' : '?'}${
+               isDev && verified
+                 ? '<span style="position:absolute;top:-7px;right:-7px;font-size:12px;line-height:1;">🔒</span>'
+                 : ''
+             }</div>`,
     iconSize: [28, 28],
     iconAnchor: [14, 14],
-  }), [confirmed]);
+  }), [confirmed, isDev, verified]);
 
   return (
     <Marker position={position} icon={icon}>
@@ -585,6 +622,8 @@ const AreaPositionMarkerComponent: React.FC<AreaPositionMarkerProps> = ({
           onRotate={onRotate}
           onResetRotation={onResetRotation}
           onSaveRotation={onSaveRotation}
+          verified={verified}
+          onToggleVerified={onToggleVerified}
         />
       </Popup>
     </Marker>
@@ -1014,11 +1053,29 @@ const MapViewInnerComponent = forwardRef<MapViewInnerHandle, MapViewInnerProps>(
     });
   }, [activeMap]);
 
+  // Проверены ли дев-ом данные ТЕКУЩЕЙ позиции area (AreaPositionOffset.verified) —
+  // свойство самих данных из areas.json, не путать с areaConfirmed (состояние
+  // игрока в localStorage). Используется и для badge в попапе, и чтобы решить,
+  // нужно ли запрашивать подтверждение перед правкой (см. handleAreaDragEnd,
+  // handleSaveAreaRotation ниже).
+  const getPositionVerified = useCallback((area: MapAreaConfig): boolean => {
+    if (!area.positions) return false;
+    const currentPositionId = areaPositionOverrides.get(area.id) ?? area.positionId;
+    return !!area.positions.find((p) => p.id === currentPositionId)?.verified;
+  }, [areaPositionOverrides]);
+
   // Dev: сохраняет текущий (возможно, подстроенный) поворот как БАЗОВЫЙ для
   // текущей позиции area — прямо в состояние areas, откуда его заберёт
   // handleExportAreas. Локальный override после этого снимаем — новое базовое
   // значение и так совпадает с тем, что было видно на экране.
   const handleSaveAreaRotation = useCallback((areaId: string) => {
+    const area = areas.find((a) => a.id === areaId);
+    // Как и в handleAreaDragEnd — правка данных уже проверенной позиции
+    // требует явного подтверждения.
+    if (area && getPositionVerified(area) && !window.confirm(t('confirm_edit_verified_position'))) {
+      return;
+    }
+
     trackEvent('area_rotation_save', { area: areaId, map: activeMap });
     setAreas((prev) =>
       prev.map((a) => {
@@ -1039,7 +1096,7 @@ const MapViewInnerComponent = forwardRef<MapViewInnerHandle, MapViewInnerProps>(
       localStorage.setItem(mapStorageKey(activeMap, 'area_rotation_overrides'), JSON.stringify(Array.from(next.entries())));
       return next;
     });
-  }, [activeMap, areaPositionOverrides, areaRotationOverrides]);
+  }, [activeMap, areas, areaPositionOverrides, areaRotationOverrides, getPositionVerified, t]);
 
   // Эффективный поворот area на её ТЕКУЩЕЙ позиции: пользовательская подстройка
   // (areaRotationOverrides), если есть, иначе базовый поворот текущей позиции
@@ -1054,6 +1111,24 @@ const MapViewInnerComponent = forwardRef<MapViewInnerHandle, MapViewInnerProps>(
     const pos = area.positions.find((p) => p.id === currentPositionId);
     return pos?.rotation ?? 0;
   }, [areaRotationOverrides, areaPositionOverrides]);
+
+  // Dev: переключает verified для ТЕКУЩЕЙ позиции area — пишет прямо в
+  // состояние areas, откуда заберёт handleExportAreas.
+  const handleToggleAreaVerified = useCallback((areaId: string) => {
+    trackEvent('area_position_verified_toggle', { area: areaId, map: activeMap });
+    setAreas((prev) =>
+      prev.map((a) => {
+        if (a.id !== areaId || !a.positions) return a;
+        const currentPositionId = areaPositionOverrides.get(areaId) ?? a.positionId;
+        return {
+          ...a,
+          positions: a.positions.map((p) =>
+            p.id === currentPositionId ? { ...p, verified: !p.verified } : p
+          ),
+        };
+      })
+    );
+  }, [activeMap, areaPositionOverrides]);
 
   // Пересчитывает геометрию area (её x/y + маркеры) под текущую выбранную позицию:
   // смещает area.x/y и все её маркеры на разницу между текущей позицией и базовой
@@ -1548,6 +1623,15 @@ const MapViewInnerComponent = forwardRef<MapViewInnerHandle, MapViewInnerProps>(
     const dy = Math.round(p.y - oldCenterY);
     if (dx === 0 && dy === 0) return;
 
+    // Позиция помечена проверенной (данные точны, см. AreaPositionOffset.verified) —
+    // запрашиваем явное подтверждение перед правкой; при отказе откатываем
+    // маркер визуально на место (иначе он остался бы там, куда его перетащили,
+    // хотя состояние area не изменилось).
+    if (getPositionVerified(area) && !window.confirm(t('confirm_edit_verified_position'))) {
+      marker.setLatLng(L.CRS.Simple.pointToLatLng(L.point(oldCenterX, oldCenterY), config.maxZoom));
+      return;
+    }
+
     const currentPositionId = areaPositionOverrides.get(areaId) ?? area.positionId;
 
     setAreas((prev) =>
@@ -1569,7 +1653,7 @@ const MapViewInnerComponent = forwardRef<MapViewInnerHandle, MapViewInnerProps>(
         return { ...a, positions };
       })
     );
-  }, [areas, getEffectiveAreaGeom, areaPositionOverrides, config]);
+  }, [areas, getEffectiveAreaGeom, areaPositionOverrides, config, getPositionVerified, t]);
 
   const handleChangeSelectedField = useCallback((field: 'text' | 'group' | 'icon' | 'image' | 'angle' | 'onlyAtPositionId', value: string | number) => {
     if (!selection) return;
@@ -1638,10 +1722,11 @@ const MapViewInnerComponent = forwardRef<MapViewInnerHandle, MapViewInnerProps>(
         if (!data.icon) delete data.icon;
         return data;
       }),
-      // rotation: 0 — просто дефолт, не нужно засорять им файл на каждой позиции.
+      // rotation: 0 / verified: false — дефолты, не нужно засорять ими файл.
       positions: a.positions?.map((p) => {
         const data: AreaPositionOffset = { ...p };
         if (!data.rotation) delete data.rotation;
+        if (!data.verified) delete data.verified;
         return data;
       }),
     }));
@@ -1802,6 +1887,7 @@ const MapViewInnerComponent = forwardRef<MapViewInnerHandle, MapViewInnerProps>(
             const currentPositionId = areaPositionOverrides.get(area.id) ?? area.positionId;
             const confirmed = !!areaConfirmed.get(area.id);
             const rotation = getAreaRotation(area);
+            const verified = getPositionVerified(area);
             const showPositionMarker = zonesVisible && area.positionId && area.positions && area.positions.length > 0 && currentPositionId;
             return (
               <React.Fragment key={area.id}>
@@ -1839,6 +1925,8 @@ const MapViewInnerComponent = forwardRef<MapViewInnerHandle, MapViewInnerProps>(
                     onRotate={handleRotateArea}
                     onResetRotation={handleResetAreaRotation}
                     onSaveRotation={isDev ? handleSaveAreaRotation : undefined}
+                    verified={verified}
+                    onToggleVerified={isDev ? handleToggleAreaVerified : undefined}
                   />
                 )}
                 {isDev && editMode && (
@@ -1892,6 +1980,8 @@ const MapViewInnerComponent = forwardRef<MapViewInnerHandle, MapViewInnerProps>(
                     onRotate={handleRotateArea}
                     onResetRotation={handleResetAreaRotation}
                     onSaveRotation={isDev ? handleSaveAreaRotation : undefined}
+                    verified={getPositionVerified(linkedArea)}
+                    onToggleVerified={isDev ? handleToggleAreaVerified : undefined}
                   />
                 </Popup>
               ) : (

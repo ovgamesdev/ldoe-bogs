@@ -88,6 +88,15 @@ export const translations = {
     switch_to: 'Сменить на',
     loot_alt: 'Лут',
     loot_fullsize_alt: 'Лут (полный размер)',
+
+    // Dev-only: точность данных предустановленной позиции area (x/y/rotation
+    // в areas.json), проверена ли она дев-ом в игре — отдельно от
+    // area_position_confirmed (то — состояние игрока про текущую позицию).
+    data_verified: 'Данные проверены',
+    data_unverified: 'Данные не проверены',
+    mark_verified: 'Пометить как проверенные',
+    mark_unverified: 'Снять пометку проверки',
+    confirm_edit_verified_position: 'Эта позиция помечена как проверенная — данные точны. Всё равно изменить их?',
   },
   en: {
     siteTitle: 'LDOE Bogs — Interactive Map',
@@ -170,6 +179,16 @@ export const translations = {
     switch_to: 'Switch to',
     loot_alt: 'Loot',
     loot_fullsize_alt: 'Loot (full size)',
+
+    // Dev-only: accuracy of a preset area position's data (x/y/rotation in
+    // areas.json), i.e. whether a dev has verified it against the game —
+    // separate from area_position_confirmed (that's a player-side state
+    // about the area's current position).
+    data_verified: 'Data verified',
+    data_unverified: 'Data not verified',
+    mark_verified: 'Mark as verified',
+    mark_unverified: 'Unmark verified',
+    confirm_edit_verified_position: 'This position is marked as verified — the data is accurate. Change it anyway?',
   },
 };
 
