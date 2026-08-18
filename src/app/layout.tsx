@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
+import Script from "next/script"
 import "./globals.css"
 import "./leaflet.css"
 import "./main.css"
@@ -16,6 +17,11 @@ const geistMono = Geist_Mono({
 });
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+
+// Google Analytics 4 measurement ID (формат "G-XXXXXXXXXX").
+// Задаётся через .env / переменные окружения GitHub Actions, чтобы не хардкодить
+// в коде — если переменная не задана, скрипты GA не подключаются.
+const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID;
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ovgamesdev.github.io/ldoe-bogs'),
@@ -97,6 +103,32 @@ export default function RootLayout({
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;500&family=Russo+One&display=swap"
         />
+
+        {/*
+          Google Analytics (GA4). Подключаем через next/script со стратегией
+          afterInteractive — скрипт грузится после того, как страница стала
+          интерактивной, не блокируя первую отрисовку. Сайт собирается как
+          статический экспорт (output: 'export'), поэтому весь код здесь
+          выполняется исключительно в браузере — это нормально для gtag.js.
+          Если переменная окружения NEXT_PUBLIC_GA_ID не задана, скрипты
+          не рендерятся вовсе.
+        */}
+        {GA_MEASUREMENT_ID && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${GA_MEASUREMENT_ID}');
+              `}
+            </Script>
+          </>
+        )}
       </head>
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         {children}

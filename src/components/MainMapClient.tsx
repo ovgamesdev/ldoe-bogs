@@ -1,6 +1,7 @@
 'use client'
 
 import { TranslationKey, useLanguage } from '@/context/LanguageContext'
+import { trackEvent } from '@/lib/analytics'
 import { ALL_GROUPS, GroupsKeys, MapKey, STORAGE_PREFIX } from '@/lib/initial-data'
 import dynamic from 'next/dynamic'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
@@ -145,10 +146,12 @@ export const MainMapClient: React.FC = () => {
   }, [activeMap, activeFilters]);
 
   const handleMapChange = useCallback((map: MapKey) => {
+    trackEvent('select_map', { map });
     setActiveMap(map);
   }, []);
 
   const handleToggleFilter = useCallback((group: GroupsKeys) => {
+    trackEvent('toggle_filter', { group, active: !activeFilters.has(group) });
     setActiveFilters((prev) => {
       const next = new Set(prev);
       if (next.has(group)) {
@@ -158,22 +161,32 @@ export const MainMapClient: React.FC = () => {
       }
       return next;
     });
-  }, []);
+  }, [activeFilters]);
 
   const handleShowAll = useCallback(() => {
+    trackEvent('filters_show_all');
     setActiveFilters(new Set(ALL_GROUPS));
   }, []);
 
   const handleHideAll = useCallback(() => {
+    trackEvent('filters_hide_all');
     setActiveFilters(new Set<GroupsKeys>());
   }, []);
 
   const handleResetAll = useCallback(() => {
     if (window.confirm(t('confirm_reset_all'))) {
+      trackEvent('reset_all');
       mapRef.current?.resetAllStatuses();
       setIsMobileOpen(false); // Закрываем шторку, если сброс был вызван из мобильного меню
     }
   }, [t]);
+
+  // Клик по картинке лута в попапе маркера — считаем отдельным событием,
+  // а не просто открытием модалки, чтобы видеть в GA, какой лут смотрят чаще.
+  const handleImageClick = useCallback((src: string) => {
+    trackEvent('view_loot_image', { image: src.split('/').pop() });
+    setModalImage(src);
+  }, []);
 
   // Формирует подпись группы с счётчиком "(осталось/всего)", как в старой версии
   const formatGroupLabel = useCallback((group: GroupsKeys) => {
@@ -220,7 +233,7 @@ export const MainMapClient: React.FC = () => {
           <button className="action-btn" style={{ background: '#dc3545' }} onClick={handleResetAll}>
             🔄 {t('reset_all')}
           </button>
-          <button className="action-btn" style={{ marginTop: "10px" }} onClick={() => window.location.href = 'https://ovgamesdev.github.io/ldoe-scout/'+language}>
+          <button className="action-btn" style={{ marginTop: "10px" }} onClick={() => { trackEvent('click_scout_maps_link'); window.location.href = 'https://ovgamesdev.github.io/ldoe-scout/'+language; }}>
             🗺️ {t('scout_maps')} ↗
           </button>
         </div>
@@ -283,7 +296,7 @@ export const MainMapClient: React.FC = () => {
         isDev={isDev}
         activeMap={activeMap}
         activeFilters={activeFilters}
-        onImageClick={setModalImage}
+        onImageClick={handleImageClick}
         onHoverCoords={handleHoverCoords}
         onGroupsChange={setAvailableGroups}
         onGroupCounts={setGroupCounts}

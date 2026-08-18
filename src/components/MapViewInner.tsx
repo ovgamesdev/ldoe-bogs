@@ -4,6 +4,7 @@ import { TranslationKey, useLanguage } from '@/context/LanguageContext'
 import { ALL_GROUPS, AreaPositionOffset, GroupsKeys, IconKeys, IMapConfig, MapAreaConfig, MapKey, MarkerJSON, STORAGE_PREFIX, ZonesJSON } from '@/lib/initial-data'
 import L from 'leaflet'
 // import 'leaflet/dist/leaflet.css'
+import { trackEvent } from '@/lib/analytics'
 import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
 import { MapContainer, Marker, Pane, Polygon, Polyline, Popup, TileLayer, useMap, useMapEvents } from 'react-leaflet'
 import { DevToolsPanel } from './DevToolsPanel'
@@ -820,6 +821,10 @@ const MapViewInnerComponent = forwardRef<MapViewInnerHandle, MapViewInnerProps>(
   }, [activeMap]);
 
   const handleToggleMarkerStatus = useCallback((key: string, status: MarkerStatus) => {
+    trackEvent('marker_status_change', {
+      status: markerStatuses.get(key) === status ? 'undo' : status,
+      map: activeMap,
+    });
     setMarkerStatuses((prev) => {
       const next = new Map(prev);
       // Повторный клик по тому же статусу — снимает отметку
@@ -831,7 +836,7 @@ const MapViewInnerComponent = forwardRef<MapViewInnerHandle, MapViewInnerProps>(
       localStorage.setItem(mapStorageKey(activeMap, 'marker_statuses'), JSON.stringify(Array.from(next.entries())));
       return next;
     });
-  }, [activeMap]);
+  }, [activeMap, markerStatuses]);
 
   // Полный сброс всех отметок done/ignored для текущей карты (вызывается извне через ref)
   useImperativeHandle(ref, () => ({
@@ -932,6 +937,7 @@ const MapViewInnerComponent = forwardRef<MapViewInnerHandle, MapViewInnerProps>(
 
   // Подтвердить текущее положение area.
   const handleConfirmAreaPosition = useCallback((areaId: string) => {
+    trackEvent('area_position_confirm', { area: areaId, map: activeMap });
     setAreaConfirmed((prev) => {
       const next = new Map(prev);
       next.set(areaId, true);
@@ -948,6 +954,7 @@ const MapViewInnerComponent = forwardRef<MapViewInnerHandle, MapViewInnerProps>(
   const handleSwitchAreaPosition = useCallback((areaId: string, positionId: string) => {
     const movingArea = areas.find((a) => a.id === areaId);
     if (!movingArea) return;
+    trackEvent('area_position_switch', { area: areaId, position: positionId, map: activeMap });
     const movingFromPositionId = areaPositionOverrides.get(areaId) ?? movingArea.positionId;
     const occupant = areas.find(
       (a) => a.id !== areaId && (areaPositionOverrides.get(a.id) ?? a.positionId) === positionId
@@ -1012,6 +1019,7 @@ const MapViewInnerComponent = forwardRef<MapViewInnerHandle, MapViewInnerProps>(
   // handleExportAreas. Локальный override после этого снимаем — новое базовое
   // значение и так совпадает с тем, что было видно на экране.
   const handleSaveAreaRotation = useCallback((areaId: string) => {
+    trackEvent('area_rotation_save', { area: areaId, map: activeMap });
     setAreas((prev) =>
       prev.map((a) => {
         if (a.id !== areaId || !a.positions) return a;

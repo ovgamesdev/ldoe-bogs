@@ -1,5 +1,6 @@
 'use client';
 
+import { trackEvent } from '@/lib/analytics'
 import { useRouter } from 'next/navigation'
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react'
 
@@ -219,10 +220,11 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode; initialLang
   }, [router]);
 
   const setLanguage = useCallback((lang: Language) => {
+    if (lang !== language) trackEvent('change_language', { language: lang });
     setLanguageState(lang);
     localStorage.setItem('ldoe_language', lang);
     updateDocumentAndUrl(lang);
-  }, [updateDocumentAndUrl]);
+  }, [language, updateDocumentAndUrl]);
 
   useEffect(() => {
     if (initialLang && language !== initialLang) {
