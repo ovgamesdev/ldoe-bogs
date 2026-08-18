@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "eslint",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d out -b gh-pages --dotfiles"
+    "deploy": "node scripts/deploy-gh-pages.js"
   },
   "dependencies": {
     "leaflet": "^1.9.4",

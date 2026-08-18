@@ -77,6 +77,27 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        {/*
+          Раньше шрифты Inter/JetBrains Mono/Russo One подключались через
+          `@import url(...)` ВНУТРИ main.css. Это заставляло браузер сначала
+          полностью скачать main.css, и только ПОТОМ узнать о необходимости
+          качать шрифты — на медленном интернете это добавляло лишний
+          последовательный round-trip перед тем, как страница вообще
+          могла нормально отрисоваться.
+
+          Явные <link> в <head> браузер видит сразу при разборе HTML
+          (через preload scanner) и начинает грузить шрифты ПАРАЛЛЕЛЬНО
+          с остальным CSS, а не после него. preconnect дополнительно
+          заранее устанавливает соединение с доменами Google Fonts.
+        */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;500&family=Russo+One&display=swap"
+        />
+      </head>
       <body className="min-h-full flex flex-col">
         {children}
       </body>

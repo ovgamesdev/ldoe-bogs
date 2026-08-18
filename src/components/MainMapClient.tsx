@@ -1,7 +1,7 @@
 'use client'
 
 import { TranslationKey, useLanguage } from '@/context/LanguageContext'
-import { ALL_GROUPS, GroupsKeys, MapKey } from '@/lib/initial-data'
+import { ALL_GROUPS, GroupsKeys, MapKey, STORAGE_PREFIX } from '@/lib/initial-data'
 import dynamic from 'next/dynamic'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { ImageModal } from './ImageModal'
@@ -16,9 +16,27 @@ const MapViewInner = dynamic(
   { ssr: false }
 );
 
+// Ключи localStorage для запоминания выбранной карты и фильтров между
+// заходами. URL остаётся основным источником (его удобно шарить ссылкой), но
+// на случай, если в адресе параметров нет (открыли сайт заново с закладки,
+// либо параметры потерялись при переключении языка — см. router.push в
+// LanguageContext) используем сохранённое в localStorage значение, а не
+// сбрасываемся на дефолт.
+const LS_KEY_MAP = `${STORAGE_PREFIX}:last_map`;
+const LS_KEY_FILTERS = `${STORAGE_PREFIX}:last_filters`;
+
+const isValidMap = (v: string | null): v is MapKey => v === 'swamp_forest' || v === 'wild_bogs';
+
+// Набор фильтров по умолчанию — используем, чтобы не засорять URL параметром
+// filters, когда пользователь его не менял (см. updateUrlParams).
+const DEFAULT_FILTERS = new Set<GroupsKeys>(ALL_GROUPS.filter((g) => g !== 'zombie'));
+
+const areFilterSetsEqual = (a: Set<GroupsKeys>, b: Set<GroupsKeys>) =>
+  a.size === b.size && Array.from(a).every((g) => b.has(g));
+
 export const MainMapClient: React.FC = () => {
   const [activeMap, setActiveMap] = useState<MapKey>('swamp_forest');
-  const [activeFilters, setActiveFilters] = useState<Set<GroupsKeys>>(new Set(ALL_GROUPS.filter(g => g !== 'zombie')));
+  const [activeFilters, setActiveFilters] = useState<Set<GroupsKeys>>(new Set(DEFAULT_FILTERS));
   // Группы, реально присутствующие в markers.json/zones.json текущей карты —
   // именно их показываем в чекбоксах фильтров (см. onGroupsChange у MapViewInner).
   const [availableGroups, setAvailableGroups] = useState<GroupsKeys[]>(ALL_GROUPS);
@@ -44,21 +62,58 @@ export const MainMapClient: React.FC = () => {
 
 	const { t, language, setLanguage } = useLanguage()
 
-  // Синхронизация URL с состоянием
+  // --- DEV TOOLS ---
+  const [isDev, setIsDev] = useState(false);
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const mapParam = params.get('map') as MapKey;
-    if (mapParam && ['swamp_forest', 'wild_bogs'].includes(mapParam)) {
+    const devParam = params.get('dev');
+    const isLocal = ['localhost', '127.0.0.1', '::1'].includes(window.location.hostname);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIsDev(devParam === '1' || (isLocal && devParam !== '0'));
+  }, []);
+
+  // Восстановление карты/фильтров при загрузке страницы: сперва смотрим URL
+  // (?map=...&filters=...), а если там пусто — берём последние сохранённые
+  // в localStorage значения. Раньше filters только писались в URL, но
+  // никогда не читались обратно — из-за этого при перезагрузке страницы
+  // фильтры всегда сбрасывались на дефолтные.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+
+    const mapParam = params.get('map');
+    const savedMap = localStorage.getItem(LS_KEY_MAP);
+    const restoredMap = isValidMap(mapParam) ? mapParam : (isValidMap(savedMap) ? savedMap : null);
+    if (restoredMap) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
-      setActiveMap(mapParam);
+      setActiveMap(restoredMap);
+    }
+
+    const filtersParam = params.get('filters');
+    const savedFilters = localStorage.getItem(LS_KEY_FILTERS);
+    const filtersStr = filtersParam ?? savedFilters;
+    if (filtersStr !== null) {
+      // Пустая строка — валидный случай ("Скрыть всё" перед перезагрузкой).
+      const restoredFilters = filtersStr === ''
+        ? []
+        : filtersStr.split(',').filter((g): g is GroupsKeys => (ALL_GROUPS as string[]).includes(g));
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setActiveFilters(new Set(restoredFilters));
     }
   }, []);
 
   const updateUrlParams = (newMap: MapKey, newFilters: Set<GroupsKeys>) => {
     const params = new URLSearchParams(window.location.search);
     params.set('map', newMap);
-    params.set('filters', Array.from(newFilters).join(','));
+    // Не засоряем URL параметром filters, если он совпадает с дефолтным
+    // набором — только когда пользователь реально что-то поменял.
+    if (areFilterSetsEqual(newFilters, DEFAULT_FILTERS)) {
+      params.delete('filters');
+    } else {
+      params.set('filters', Array.from(newFilters).join(','));
+    }
     window.history.replaceState({}, '', `${window.location.pathname}?${params.toString()}`);
+    localStorage.setItem(LS_KEY_MAP, newMap);
+    localStorage.setItem(LS_KEY_FILTERS, Array.from(newFilters).join(','));
   };
 
   // Синхронизируем URL с текущими map/filters в отдельном эффекте (а не прямо
@@ -67,7 +122,25 @@ export const MainMapClient: React.FC = () => {
   // рендера (в т.ч. из колбэка setActiveFilters(prev => ...)) запрещено React —
   // именно так возникала ошибка "Cannot update a component (Router) while
   // rendering a different component (MainMapClient)".
+  //
+  // ВАЖНО: этот эффект и эффект восстановления выше оба срабатывают при
+  // монтировании компонента. Восстановление вызывает setActiveMap/
+  // setActiveFilters, но это применится только на СЛЕДУЮЩЕМ рендере — в рамках
+  // самого первого коммита этот эффект всё ещё видит дефолтные activeMap/
+  // activeFilters (замыкание первого рендера) и, если бы вызвал
+  // updateUrlParams сразу, затёр бы восстановленные map/filters в URL и
+  // localStorage дефолтными значениями раньше, чем успевало отработать
+  // восстановление (баг: при перезагрузке страница возвращалась на
+  // swamp_forest несмотря на ?map=wild_bogs в адресе). Поэтому пропускаем
+  // самый первый (монтирующий) запуск этого эффекта — как только
+  // восстановленные значения применятся, эффект перезапустится с уже
+  // актуальными activeMap/activeFilters и запишет их.
+  const skipFirstUrlSyncRef = useRef(true);
   useEffect(() => {
+    if (skipFirstUrlSyncRef.current) {
+      skipFirstUrlSyncRef.current = false;
+      return;
+    }
     updateUrlParams(activeMap, activeFilters);
   }, [activeMap, activeFilters]);
 
@@ -207,6 +280,7 @@ export const MainMapClient: React.FC = () => {
       {/* Карта Leaflet */}
       <MapViewInner
         ref={mapRef}
+        isDev={isDev}
         activeMap={activeMap}
         activeFilters={activeFilters}
         onImageClick={setModalImage}
@@ -216,7 +290,7 @@ export const MainMapClient: React.FC = () => {
       />
 
       {/* Координаты мыши: обновляются напрямую в DOM (см. coordsRef), без ре-рендера */}
-      <div className="coords-info" ref={coordsRef}>X: 0, Y: 0</div>
+      {isDev && <div className="coords-info" ref={coordsRef}>X: 0, Y: 0</div>}
 
       {/* Кнопка фильтров на мобильных */}
       <button className="fab-filter-btn" onClick={handleOpenMobileSheet}>

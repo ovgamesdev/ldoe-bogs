@@ -24,36 +24,6 @@
         "group": "box"
     },
     {
-        "x": 43064,
-        "y": 27082,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 43578,
-        "y": 25500,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 44908,
-        "y": 24684,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 47210,
-        "y": 27156,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 44510,
-        "y": 28306,
-        "text": "box",
-        "group": "box"
-    },
-    {
         "x": 29296,
         "y": 41484,
         "text": "box",
@@ -68,18 +38,6 @@
     {
         "x": 26534,
         "y": 47974,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 22834,
-        "y": 42626,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 23548,
-        "y": 39978,
         "text": "box",
         "group": "box"
     },
@@ -144,30 +102,6 @@
         "group": "box"
     },
     {
-        "x": 29672,
-        "y": 18312,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 30122,
-        "y": 19440,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 33546,
-        "y": 21010,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 34040,
-        "y": 21708,
-        "text": "box",
-        "group": "box"
-    },
-    {
         "x": 26584,
         "y": 22176,
         "text": "box",
@@ -180,68 +114,8 @@
         "group": "box"
     },
     {
-        "x": 25800,
-        "y": 29460,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 24282,
-        "y": 29744,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 25494,
-        "y": 31220,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 25594,
-        "y": 31612,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 26362,
-        "y": 31914,
-        "text": "box",
-        "group": "box"
-    },
-    {
         "x": 14862,
         "y": 35400,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 10675,
-        "y": 31640,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 12142,
-        "y": 30420,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 10766,
-        "y": 29426,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 13580,
-        "y": 29918,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 13722,
-        "y": 30780,
         "text": "box",
         "group": "box"
     },
@@ -272,12 +146,6 @@
     {
         "x": 22704,
         "y": 22462,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 19386,
-        "y": 16658,
         "text": "box",
         "group": "box"
     },
@@ -624,59 +492,10 @@
         "group": "unique_resource"
     },
     {
-        "x": 21028,
-        "y": 41279,
-        "text": "crowbar",
-        "group": "crowbar"
-    },
-    {
-        "x": 20592,
-        "y": 41158,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 21790,
-        "y": 41018,
-        "text": "door_winch",
-        "group": "door_winch"
-    },
-    {
-        "x": 21422,
-        "y": 40906,
-        "text": "box",
-        "group": "box"
-    },
-    {
         "x": 19976,
         "y": 36040,
         "text": "unique_resource",
         "group": "unique_resource"
-    },
-    {
-        "x": 26696,
-        "y": 32396,
-        "text": "door_winch",
-        "group": "door_winch"
-    },
-    {
-        "x": 19554,
-        "y": 15014,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 11186,
-        "y": 32342,
-        "text": "barrier",
-        "group": "barrier",
-        "angle": 308
-    },
-    {
-        "x": 13004,
-        "y": 31036,
-        "text": "transistor",
-        "group": "transistor"
     },
     {
         "x": 33428,
@@ -697,67 +516,6 @@
         "group": "unique_resource"
     },
     {
-        "x": 31982,
-        "y": 21420,
-        "text": "barrier",
-        "group": "barrier",
-        "angle": 315
-    },
-    {
-        "x": 32432,
-        "y": 16980,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 30856,
-        "y": 18622,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 33722,
-        "y": 18356,
-        "text": "c4",
-        "group": "c4"
-    },
-    {
-        "x": 34206,
-        "y": 17884,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 34246,
-        "y": 20582,
-        "text": "transistor",
-        "group": "transistor"
-    },
-    {
-        "x": 34344,
-        "y": 22324,
-        "text": "transistor",
-        "group": "transistor"
-    },
-    {
-        "x": 46742,
-        "y": 27861,
-        "text": "c4",
-        "group": "c4"
-    },
-    {
-        "x": 44766,
-        "y": 25259,
-        "text": "crowbar",
-        "group": "crowbar"
-    },
-    {
-        "x": 42808,
-        "y": 26906,
-        "text": "door_winch",
-        "group": "door_winch"
-    },
-    {
         "x": 14608,
         "y": 23752,
         "text": "unique_resource",
@@ -776,9 +534,9 @@
         "group": "unique_resource"
     },
     {
-        "x": 23184,
-        "y": 42792,
-        "text": "unique_resource",
+        "x": 29832,
+        "y": 41776,
+        "text": "item_unique_resource",
         "group": "unique_resource"
     }
 ]

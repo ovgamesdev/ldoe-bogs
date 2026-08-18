@@ -30,18 +30,6 @@
         "group": "box"
     },
     {
-        "x": 42374,
-        "y": 40428,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 42016,
-        "y": 38078,
-        "text": "box",
-        "group": "box"
-    },
-    {
         "x": 46475,
         "y": 34658,
         "text": "box",
@@ -234,92 +222,8 @@
         "group": "box"
     },
     {
-        "x": 14286,
-        "y": 38126,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 13078,
-        "y": 36024,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 14050,
-        "y": 35160,
-        "text": "box",
-        "group": "box"
-    },
-    {
         "x": 9970,
         "y": 31131,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 29878,
-        "y": 14824,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 32230,
-        "y": 16818,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 31604,
-        "y": 17492,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 30244,
-        "y": 17940,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 28160,
-        "y": 16600,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 23738,
-        "y": 28819,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 28674,
-        "y": 40610,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 30450,
-        "y": 38884,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 32050,
-        "y": 40248,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 32670,
-        "y": 41112,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 26928,
-        "y": 50004,
         "text": "box",
         "group": "box"
     },
@@ -594,30 +498,6 @@
         "group": "box_winch"
     },
     {
-        "x": 29569,
-        "y": 18718,
-        "text": "box_winch",
-        "group": "box_winch"
-    },
-    {
-        "x": 28313,
-        "y": 17211,
-        "text": "box_winch",
-        "group": "box_winch"
-    },
-    {
-        "x": 30601,
-        "y": 16610,
-        "text": "box_winch",
-        "group": "box_winch"
-    },
-    {
-        "x": 32366,
-        "y": 11624,
-        "text": "box_winch",
-        "group": "box_winch"
-    },
-    {
         "x": 28054,
         "y": 11298,
         "text": "box_winch",
@@ -628,12 +508,6 @@
         "y": 12696,
         "text": "box_winch",
         "group": "box_winch"
-    },
-    {
-        "x": 14025,
-        "y": 36055,
-        "text": "crowbar",
-        "group": "crowbar"
     },
     {
         "x": 11584,
@@ -666,80 +540,16 @@
         "group": "unique_resource"
     },
     {
-        "x": 31716,
-        "y": 40730,
-        "text": "axe",
-        "group": "axe"
-    },
-    {
-        "x": 28676,
-        "y": 40936,
-        "text": "door_winch",
-        "group": "door_winch"
-    },
-    {
-        "x": 41512,
-        "y": 39856,
-        "text": "barrier",
-        "group": "barrier",
-        "angle": 309
-    },
-    {
-        "x": 27852,
-        "y": 18266,
-        "text": "barrier",
-        "group": "barrier",
-        "angle": 331
-    },
-    {
-        "x": 28344,
-        "y": 18714,
-        "text": "barrier",
-        "group": "barrier",
-        "angle": 286
-    },
-    {
-        "x": 30917,
-        "y": 15431,
-        "text": "barrier",
-        "group": "barrier",
-        "angle": 135
-    },
-    {
-        "x": 29786,
-        "y": 17728,
-        "text": "door_winch",
-        "group": "door_winch"
-    },
-    {
-        "x": 31146,
-        "y": 18014,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 31323,
-        "y": 16854,
-        "text": "axe",
-        "group": "axe"
-    },
-    {
-        "x": 29170,
-        "y": 18960,
-        "text": "box",
-        "group": "box"
+        "x": 32366,
+        "y": 11624,
+        "text": "box_winch",
+        "group": "box_winch"
     },
     {
         "x": 25080,
         "y": 11880,
         "text": "unique_resource",
         "group": "unique_resource"
-    },
-    {
-        "x": 23858,
-        "y": 27153,
-        "text": "box",
-        "group": "box"
     },
     {
         "x": 26314,
@@ -766,94 +576,9 @@
         "group": "unique_resource"
     },
     {
-        "x": 39012,
-        "y": 24328,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 39245,
-        "y": 24171,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 40330,
-        "y": 25598,
-        "text": "door_winch",
-        "group": "door_winch"
-    },
-    {
-        "x": 16300,
-        "y": 22300,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 17344,
-        "y": 23380,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 15908,
-        "y": 22946,
-        "text": "crowbar",
-        "group": "crowbar"
-    },
-    {
-        "x": 15710,
-        "y": 21830,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 16672,
-        "y": 21444,
-        "text": "unique_resource",
-        "group": "unique_resource"
-    },
-    {
-        "x": 17156,
-        "y": 22464,
-        "text": "unique_resource",
-        "group": "unique_resource"
-    },
-    {
-        "x": 39358,
-        "y": 26554,
-        "text": "unique_resource",
-        "group": "unique_resource"
-    },
-    {
-        "x": 14924,
-        "y": 36588,
-        "text": "barrier",
-        "group": "barrier",
-        "angle": 199
-    },
-    {
         "x": 16608,
         "y": 31160,
         "text": "unique_resource",
         "group": "unique_resource"
-    },
-    {
-        "x": 40596,
-        "y": 25072,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 40489,
-        "y": 25120,
-        "text": "box",
-        "group": "box"
-    },
-    {
-        "x": 41236,
-        "y": 25999,
-        "text": "box",
-        "group": "box"
     }
 ]

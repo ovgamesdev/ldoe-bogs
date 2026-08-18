@@ -1,5 +1,7 @@
-/* Подключение стилей Leaflet и шрифтов */
-@import "leaflet/dist/leaflet.css";
+/* leaflet.css сюда больше не импортируется — он уже подключён напрямую
+   в layout.tsx (`import "./leaflet.css"`). Раньше файл грузился ДВАЖДЫ:
+   один раз локальный ./leaflet.css, второй раз этот @import из
+   node_modules — двойной вес и лишняя сетевая загрузка на старте. */
 
 body {
   margin: 0;
@@ -113,7 +115,6 @@ body {
 .popup-section-title {
   font-weight: 700;
   margin-top: 8px;
-  color: #111;
 }
 .popup-loot-list {
   font-family: 'JetBrains Mono', monospace;
@@ -141,6 +142,34 @@ body {
   text-decoration: underline;
 }
 
+/* Попап подтверждения/поворота позиции area (AreaPositionPopupContent) */
+.confirm-position-btn {
+  background: #2e7d32;
+  margin-bottom: 0;
+}
+.confirm-position-btn:hover {
+  background: #388e3c;
+}
+
+/* Ряд кнопок поворота (±90°/±15°/±1°) — раньше это были 6 обычных .map-btn
+   с flex:1 в один ряд: они физически не помещались в попап шириной ~230px,
+   а .leaflet-popup-content с overflow-x:hidden просто обрезал лишний текст
+   (кнопки показывали обрывки вроде "c0°" вместо "↺ 90°"). Разрешаем перенос
+   на 2 строки по 3 кнопки и уменьшаем паддинги/шрифт под их компактный размер. */
+.rotation-btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.map-btn-sm {
+  flex: 1 1 30%;
+  min-width: 44px;
+  padding: 4px 2px;
+  font-size: 11px;
+  text-align: center;
+  margin-bottom: 0;
+}
+
 /* Верхний UI Панели управления ПК */
 .top-desktop-ui {
   position: absolute;
@@ -156,6 +185,12 @@ body {
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
   max-width: 260px;
+  /* Явно задаём тёмный цвет текста для панели: без этого текст (RU/EN,
+     подписи радио-кнопок карт, подписи чекбоксов фильтров) наследовал
+     цвет body из globals.css, а тот в @media (prefers-color-scheme: dark)
+     становится почти белым (#ededed) — на светлой полупрозрачной панели
+     он был практически невидим. */
+  color: #1a1a1a;
 }
 
 .map-selector-pc select {
@@ -337,14 +372,75 @@ body {
   box-shadow: 0 0 25px rgba(0,0,0,0.5);
 }
 
-@media (min-width: 768px) {
-  .fab-filter-btn, .mobile-header-bar {
-    display: none !important;
-  }
-}
+/* Правило "скрыть .fab-filter-btn / .mobile-header-bar на десктопе" отсюда
+   убрано: во-первых, класс .mobile-header-bar нигде не используется (у
+   компонента MobileHeader класс называется .mobile-header, для него база
+   display:none уже задана в mobile-layout.css), во-вторых, теперь у
+   .fab-filter-btn и .bottom-sheet есть собственное базовое состояние
+   display:none в mobile-layout.css — не нужно дублировать (и тем более
+   рассинхронизировать по брейкпоинту 768 vs 767) эту логику в двух файлах. */
 
 @media (max-width: 767px) {
   .top-desktop-ui {
     display: none !important;
   }
+}
+/* ==========================================================================
+   Области карты (MapAreaConfig) — редактирование в dev-режиме
+   ========================================================================== */
+
+/* Хэндлы углов области (resize) */
+.area-handle-dot {
+  width: 14px;
+  height: 14px;
+  background: #fff;
+  border: 2px solid #2b8cff;
+  border-radius: 50%;
+  cursor: nwse-resize;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Хэндл перемещения области целиком */
+.area-move-dot {
+  width: 22px;
+  height: 22px;
+  background: #2b8cff;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: move;
+  font-size: 13px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Плавающее контекстное меню области (ПКМ) */
+.area-context-menu {
+  z-index: 2000;
+  background: #222;
+  border: 1px solid #444;
+  border-radius: 6px;
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  min-width: 190px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+}
+
+.area-context-menu button {
+  background: none;
+  border: none;
+  color: #eee;
+  text-align: left;
+  padding: 7px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.area-context-menu button:hover {
+  background: #333;
 }

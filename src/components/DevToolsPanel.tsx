@@ -59,6 +59,9 @@ interface SelectedMarkerData {
   icon?: string;
   image?: string;
   angle?: number;
+  // Если задано — маркер виден только когда его area стоит на этой позиции
+  // (см. MapAreaConfig.positions). Актуально только для маркеров внутри area.
+  onlyAtPositionId?: string;
 }
 
 interface DevToolsPanelProps {
@@ -72,6 +75,12 @@ interface DevToolsPanelProps {
   newMarkerGroup: string;
   onChangeNewMarkerGroup: (v: string) => void;
 
+  // Куда добавлять новые маркеры (addMode) и куда переносить выделенный
+  // маркер верхнего уровня: '' — обычные markers.json карты, иначе — id area.
+  areaOptions: { id: string; label: string }[];
+  newMarkerAreaTarget: string;
+  onChangeNewMarkerAreaTarget: (v: string) => void;
+
   deleteGroupValue: string;
   onChangeDeleteGroupValue: (v: string) => void;
   onDeleteGroup: () => void;
@@ -83,10 +92,19 @@ interface DevToolsPanelProps {
   onFinishZone: () => void;
 
   selectedMarker: SelectedMarkerData | null;
-  onChangeSelectedField: (field: 'text' | 'group' | 'icon' | 'image' | 'angle', value: string | number) => void;
+  // 'top' — маркер из markers.json карты, 'area' — маркер внутри area.
+  // Кнопка "Переместить в область" показывается только для 'top'.
+  selectedMarkerScope: 'top' | 'area' | null;
+  // Позиции area, которой принадлежит выделенный маркер (пусто для scope
+  // 'top' или если у area нет предустановленных позиций) — для селекта
+  // "Показывать только на позиции".
+  selectedMarkerAreaPositions: { id: string; label: string }[];
+  onChangeSelectedField: (field: 'text' | 'group' | 'icon' | 'image' | 'angle' | 'onlyAtPositionId', value: string | number) => void;
   onDeleteSelectedMarker: () => void;
+  onMoveSelectedMarkerToArea: () => void;
 
   onExportMarkers: () => void;
+  onExportAreas: () => void;
 }
 
 const FlashButton: React.FC<{ onClick: () => void; children: React.ReactNode; style?: React.CSSProperties }> = ({ onClick, children, style }) => {
@@ -113,6 +131,9 @@ const DevToolsPanelComponent: React.FC<DevToolsPanelProps> = ({
   onToggleAddMode,
   newMarkerGroup,
   onChangeNewMarkerGroup,
+  areaOptions,
+  newMarkerAreaTarget,
+  onChangeNewMarkerAreaTarget,
   deleteGroupValue,
   onChangeDeleteGroupValue,
   onDeleteGroup,
@@ -122,9 +143,13 @@ const DevToolsPanelComponent: React.FC<DevToolsPanelProps> = ({
   onUndoZonePoint,
   onFinishZone,
   selectedMarker,
+  selectedMarkerScope,
+  selectedMarkerAreaPositions,
   onChangeSelectedField,
   onDeleteSelectedMarker,
+  onMoveSelectedMarkerToArea,
   onExportMarkers,
+  onExportAreas,
 }) => {
   return (
     <div style={panelStyle}>
@@ -148,7 +173,7 @@ const DevToolsPanelComponent: React.FC<DevToolsPanelProps> = ({
         Dev: Marker Editor
       </div>
 
-      <label style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer', background: '#333', padding: 5, borderRadius: 4, marginBottom: 8 }}>
+      <label style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer', background: '#333', padding: 5, borderRadius: 4, marginBottom: 8 }} title="Также включает синий ✥-хэндл для перетаскивания самих areas (двигает их текущую позицию)">
         <input type="checkbox" checked={editMode} onChange={(e) => onToggleEditMode(e.target.checked)} />
         <span>Enable Edit &amp; Dragging</span>
       </label>
@@ -164,6 +189,19 @@ const DevToolsPanelComponent: React.FC<DevToolsPanelProps> = ({
           ))}
           <option value="location">📍 Location Text</option>
         </select>
+        {areaOptions.length > 0 && (
+          <select
+            style={{ ...selectStyle, marginBottom: 0 }}
+            value={newMarkerAreaTarget}
+            onChange={(e) => onChangeNewMarkerAreaTarget(e.target.value)}
+            title="Куда добавлять новые маркеры / куда переносить выделенный"
+          >
+            <option value="">📍 markers.json (карта)</option>
+            {areaOptions.map((a) => (
+              <option key={a.id} value={a.id}>🏠 {a.label}</option>
+            ))}
+          </select>
+        )}
       </div>
 
       <div style={{ background: '#333', padding: 6, borderRadius: 4, marginBottom: 8, display: 'flex', flexDirection: 'column', gap: 6 }}>
@@ -180,7 +218,7 @@ const DevToolsPanelComponent: React.FC<DevToolsPanelProps> = ({
       {selectedMarker && (
         <div style={{ background: '#444', padding: 8, borderRadius: 4, marginBottom: 8, display: 'flex', flexDirection: 'column', gap: 6, borderLeft: '3px solid #f44336' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', color: '#ddd', fontWeight: 'bold' }}>
-            <span>Marker</span>
+            <span>Marker {selectedMarkerScope === 'area' ? '🏠' : '📍'}</span>
             <span style={{ color: '#aaa' }}>X: {selectedMarker.x}, Y: {selectedMarker.y}</span>
           </div>
 
@@ -243,6 +281,32 @@ const DevToolsPanelComponent: React.FC<DevToolsPanelProps> = ({
             </>
           )}
 
+          {selectedMarkerScope === 'area' && selectedMarkerAreaPositions.length > 0 && (
+            <label style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} title="Маркер будет виден только когда area стоит на выбранной позиции">
+              Только на позиции:
+              <select
+                style={{ ...inputStyle, padding: '2px' }}
+                value={selectedMarker.onlyAtPositionId || ''}
+                onChange={(e) => onChangeSelectedField('onlyAtPositionId', e.target.value)}
+              >
+                <option value="">🌐 Все позиции</option>
+                {selectedMarkerAreaPositions.map((p) => (
+                  <option key={p.id} value={p.id}>📍 {p.label}</option>
+                ))}
+              </select>
+            </label>
+          )}
+
+          {selectedMarkerScope === 'top' && areaOptions.length > 0 && (
+            <button
+              style={{ ...btnStyle, background: '#6a1b9a', marginBottom: 0, opacity: newMarkerAreaTarget ? 1 : 0.5, pointerEvents: newMarkerAreaTarget ? 'auto' : 'none' }}
+              onClick={onMoveSelectedMarkerToArea}
+              title="Переносит маркер из markers.json в markers выбранной area (см. селект выше)"
+            >
+              ➡️ В область
+            </button>
+          )}
+
           <button style={{ ...btnStyle, background: '#c62828', marginBottom: 0 }} onClick={onDeleteSelectedMarker}>
             🗑️ Удалить маркер
           </button>
@@ -252,6 +316,11 @@ const DevToolsPanelComponent: React.FC<DevToolsPanelProps> = ({
       <FlashButton onClick={onExportMarkers}>
         💾 Экспорт всех маркеров
       </FlashButton>
+      {areaOptions.length > 0 && (
+        <FlashButton onClick={onExportAreas}>
+          💾 Экспорт areas.json
+        </FlashButton>
+      )}
     </div>
   );
 };

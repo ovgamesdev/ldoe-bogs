@@ -1,3 +1,4 @@
+import { useLanguage } from '@/context/LanguageContext'
 import React from 'react'
 
 interface ImageModalProps {
@@ -6,11 +7,12 @@ interface ImageModalProps {
 }
 
 const ImageModalComponent: React.FC<ImageModalProps> = ({ src, onClose }) => {
+  const { t } = useLanguage();
   if (!src) return null;
 
   return (
     <div className="image-modal" onClick={onClose}>
-      <img src={src} alt="Loot Fullsize" onClick={(e) => e.stopPropagation()} />
+      <img src={src} alt={t('loot_fullsize_alt')} onClick={(e) => e.stopPropagation()} />
     </div>
   );
 };
