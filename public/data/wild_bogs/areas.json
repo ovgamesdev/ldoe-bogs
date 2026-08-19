@@ -24,6 +24,13 @@
                 "y": 15014,
                 "text": "box",
                 "group": "box"
+            },
+            {
+                "x": 16186,
+                "y": 14373,
+                "text": "item_box",
+                "group": "box",
+                "onlyAtPositionId": "top_right"
             }
         ],
         "positionId": "top_left",
@@ -36,13 +43,15 @@
             },
             {
                 "id": "top_right",
-                "x": 29806,
-                "y": 17135
+                "x": 31718,
+                "y": 19527,
+                "verified": true
             },
             {
                 "id": "right",
-                "x": 41854,
-                "y": 25871
+                "x": 41926,
+                "y": 26283,
+                "verified": true
             },
             {
                 "id": "center",
@@ -85,7 +94,8 @@
                 "x": 30122,
                 "y": 19440,
                 "text": "box",
-                "group": "box"
+                "group": "box",
+                "onlyAtPositionId": "top_right"
             },
             {
                 "x": 30856,
@@ -141,6 +151,18 @@
                 "y": 20582,
                 "text": "transistor",
                 "group": "transistor"
+            },
+            {
+                "x": 35218,
+                "y": 19634,
+                "text": "item_box",
+                "group": "box"
+            },
+            {
+                "x": 37166,
+                "y": 21066,
+                "text": "item_box",
+                "group": "box"
             }
         ],
         "positionId": "top_right",
@@ -163,9 +185,10 @@
             },
             {
                 "id": "center",
-                "x": 20768,
-                "y": 26019,
-                "rotation": 352
+                "x": 20680,
+                "y": 26003,
+                "rotation": 352,
+                "verified": true
             },
             {
                 "id": "bottom",
@@ -174,8 +197,9 @@
             },
             {
                 "id": "left",
-                "x": 6784,
-                "y": 27235
+                "x": 5872,
+                "y": 24531,
+                "verified": true
             }
         ]
     },
@@ -263,13 +287,16 @@
             },
             {
                 "id": "center",
-                "x": 22853,
-                "y": 27253
+                "x": 23189,
+                "y": 27101,
+                "verified": true,
+                "rotation": 350
             },
             {
                 "id": "bottom",
-                "x": 19749,
-                "y": 39509
+                "x": 19277,
+                "y": 37357,
+                "verified": true
             },
             {
                 "id": "left",
@@ -333,8 +360,9 @@
         "positions": [
             {
                 "id": "top_left",
-                "x": 14894,
-                "y": 14061
+                "x": 17302,
+                "y": 12997,
+                "verified": true
             },
             {
                 "id": "top_right",
@@ -451,9 +479,10 @@
             },
             {
                 "id": "left",
-                "x": 7631,
-                "y": 28981,
-                "rotation": 5
+                "x": 7767,
+                "y": 28917,
+                "rotation": 5,
+                "verified": true
             }
         ]
     },
@@ -531,13 +560,15 @@
             },
             {
                 "id": "top_right",
-                "x": 31435,
-                "y": 18527
+                "x": 31776,
+                "y": 19051,
+                "verified": true
             },
             {
                 "id": "right",
-                "x": 42027,
-                "y": 24991
+                "x": 42356,
+                "y": 24715,
+                "verified": true
             },
             {
                 "id": "center",

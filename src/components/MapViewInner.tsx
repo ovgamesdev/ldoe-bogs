@@ -422,6 +422,10 @@ interface AreaPositionMarkerProps {
   // поменяет обе area местами; показываем это в кнопке.
   positionOccupancy: Map<string, string>;
   getAreaName: (areaId: string) => string;
+  // Подтверждено ли ТЕКУЩЕЕ положение area с данным id (areaConfirmed) —
+  // нужно, чтобы в списке "Сменить на:" показывать, подтверждён ли занимающий
+  // целевую позицию сосед (с кем произойдёт обмен местами при переключении).
+  isAreaConfirmed: (areaId: string) => boolean;
   onConfirm: (areaId: string) => void;
   onSwitch: (areaId: string, positionId: string) => void;
   // --- поворот текущей позиции (см. AreaPositionOffset.rotation) ---
@@ -453,6 +457,7 @@ interface AreaPositionPopupContentProps {
   getPositionLabel: (positionId: string) => string;
   positionOccupancy: Map<string, string>;
   getAreaName: (areaId: string) => string;
+  isAreaConfirmed: (areaId: string) => boolean;
   onConfirm: (areaId: string) => void;
   onSwitch: (areaId: string, positionId: string) => void;
   rotation: number;
@@ -473,6 +478,7 @@ const AreaPositionPopupContent: React.FC<AreaPositionPopupContentProps> = ({
   getPositionLabel,
   positionOccupancy,
   getAreaName,
+  isAreaConfirmed,
   onConfirm,
   onSwitch,
   rotation,
@@ -548,9 +554,13 @@ const AreaPositionPopupContent: React.FC<AreaPositionPopupContentProps> = ({
         {otherPositions.map((p) => {
           const occupantId = positionOccupancy.get(p.id);
           const occupantName = occupantId ? getAreaName(occupantId) : null;
+          // Подтверждено ли текущее положение соседа, с которым произойдёт
+          // обмен местами при переключении на эту позицию (см. isAreaConfirmed).
+          const occupantConfirmed = occupantId ? isAreaConfirmed(occupantId) : null;
           return (
             <button key={p.id} className="map-btn" onClick={() => onSwitch(areaId, p.id)}>
-              {getPositionLabel(p.id)}{occupantName ? ` (⇄ ${occupantName})` : ''}
+              {getPositionLabel(p.id)}
+              {occupantName ? ` (⇄ ${occupantName} ${occupantConfirmed ? '✅' : '❌'})` : ''}
             </button>
           );
         })}
@@ -571,6 +581,7 @@ const AreaPositionMarkerComponent: React.FC<AreaPositionMarkerProps> = ({
   getPositionLabel,
   positionOccupancy,
   getAreaName,
+  isAreaConfirmed,
   onConfirm,
   onSwitch,
   rotation,
@@ -615,6 +626,7 @@ const AreaPositionMarkerComponent: React.FC<AreaPositionMarkerProps> = ({
           getPositionLabel={getPositionLabel}
           positionOccupancy={positionOccupancy}
           getAreaName={getAreaName}
+          isAreaConfirmed={isAreaConfirmed}
           onConfirm={onConfirm}
           onSwitch={onSwitch}
           rotation={rotation}
@@ -760,42 +772,61 @@ const AreaLodOverlay: React.FC<{
     reset();
   }, [reset]);
 
-  useMapEvents({
-    zoomend: () => setZoom(Math.round(map.getZoom())),
-    viewreset: reset,
-    // При pinch-зуме (два пальца) Leaflet НЕ анимирует зум через _animateZoom
-    // на каждом кадре — вместо этого Map.TouchZoom напрямую двигает панель
-    // карты через map._move() на каждый touchmove, и это стреляет событие
-    // 'zoom' (не 'zoomanim'!). 'zoomanim' там срабатывает только один раз, в
-    // самый конец жеста (когда пальцы отпущены и зум "доезжает"/снэпится).
-    // Родные слои Leaflet двигаются бесплатно, т.к. физически лежат в той же
-    // DOM-панели, которую двигает _move(). Наш оверлей — отдельный элемент,
-    // так что без этого хендлера он "зависает" на месте весь pinch-жест и
-    // телепортируется в правильную позицию только по отпусканию пальцев.
-    // Ровно так же эту проблему решает сам нативный L.ImageOverlay — он
-    // подписан на 'zoom' в дополнение к 'viewreset'/'zoomanim'
-    // (см. ImageOverlay.prototype.getEvents).
-    zoom: reset,
-    // Стреляет один раз в начале анимированного зума с координатами ЦЕЛЕВОГО
-    // состояния — сразу выставляем финальный transform, дальше CSS-переход
-    // (леафлетовский .leaflet-zoom-anim .leaflet-zoom-animated { transition })
-    // доводит его плавно, синхронно с тайлами/маркерами карты.
-    zoomanim: (e: L.ZoomAnimEvent) => {
-      // _latLngBoundsToNewLayerBounds — внутренний (не документированный) метод
-      // Leaflet, но именно им пользуется сам L.ImageOverlay для той же задачи
-      // (см. ImageOverlay.prototype._animateZoom) — считает смещение верхнего
-      // левого угла в пиксельной системе координат ЦЕЛЕВОГО зума.
-      const mapAny = map as unknown as {
-        _latLngBoundsToNewLayerBounds?: (b: L.LatLngBounds, zoom: number, center: L.LatLng) => L.Bounds;
-      };
-      const newBounds = mapAny._latLngBoundsToNewLayerBounds?.(bounds, e.zoom, e.center);
-      if (!newBounds) return; // На случай, если приватный метод пропал в новой версии Leaflet — просто не анимируем этот кадр.
-      // Считаем scale от baseZoomRef (зафиксирован в reset(), соответствует
-      // lastSizeRef), а НЕ от live map.getZoom() — см. комментарий у baseZoomRef.
-      const scale = map.getZoomScale(e.zoom, baseZoomRef.current);
-      applyTransform(newBounds.min!.x, newBounds.min!.y, scale);
-    },
-  });
+  // ВАЖНО: handlers должен быть мемоизирован (как и во всех остальных
+  // useMapEvents в этом файле — см. ViewportTracker/ViewportPersister/
+  // DevMapClickHandler). AreaLodOverlay рендерится по одному экземпляру на
+  // каждую видимую area, и раньше сюда передавался инлайн-объект — новая
+  // ссылка на каждый рендер. useMapEvents переподписывается (map.off старых +
+  // map.on новых) при каждой смене ссылки, а значит — на каждый ре-рендер
+  // ЛЮБОЙ видимой area. Это провоцирует ту самую петлю с ResizeObserver
+  // карты (см. комментарий у handleVisibleBoundsChange в MapViewInnerComponent):
+  // resubscribe у нескольких area одновременно -> Leaflet пересчитывает
+  // размер контейнера -> лишний moveend/viewreset -> setVisibleBounds с
+  // РЕАЛЬНО новыми (не равными предыдущим) bounds -> ре-рендер -> resubscribe
+  // -> ... -> "Maximum update depth exceeded". .equals() в
+  // handleVisibleBoundsChange эту петлю не ловит, т.к. bounds на каждом шаге
+  // действительно чуть отличаются — резать нужно у источника, здесь.
+  const handlers = useMemo(
+    () => ({
+      zoomend: () => setZoom(Math.round(map.getZoom())),
+      viewreset: reset,
+      // При pinch-зуме (два пальца) Leaflet НЕ анимирует зум через _animateZoom
+      // на каждом кадре — вместо этого Map.TouchZoom напрямую двигает панель
+      // карты через map._move() на каждый touchmove, и это стреляет событие
+      // 'zoom' (не 'zoomanim'!). 'zoomanim' там срабатывает только один раз, в
+      // самый конец жеста (когда пальцы отпущены и зум "доезжает"/снэпится).
+      // Родные слои Leaflet двигаются бесплатно, т.к. физически лежат в той же
+      // DOM-панели, которую двигает _move(). Наш оверлей — отдельный элемент,
+      // так что без этого хендлера он "зависает" на месте весь pinch-жест и
+      // телепортируется в правильную позицию только по отпусканию пальцев.
+      // Ровно так же эту проблему решает сам нативный L.ImageOverlay — он
+      // подписан на 'zoom' в дополнение к 'viewreset'/'zoomanim'
+      // (см. ImageOverlay.prototype.getEvents).
+      zoom: reset,
+      // Стреляет один раз в начале анимированного зума с координатами ЦЕЛЕВОГО
+      // состояния — сразу выставляем финальный transform, дальше CSS-переход
+      // (леафлетовский .leaflet-zoom-anim .leaflet-zoom-animated { transition })
+      // доводит его плавно, синхронно с тайлами/маркерами карты.
+      zoomanim: (e: L.ZoomAnimEvent) => {
+        // _latLngBoundsToNewLayerBounds — внутренний (не документированный) метод
+        // Leaflet, но именно им пользуется сам L.ImageOverlay для той же задачи
+        // (см. ImageOverlay.prototype._animateZoom) — считает смещение верхнего
+        // левого угла в пиксельной системе координат ЦЕЛЕВОГО зума.
+        const mapAny = map as unknown as {
+          _latLngBoundsToNewLayerBounds?: (b: L.LatLngBounds, zoom: number, center: L.LatLng) => L.Bounds;
+        };
+        const newBounds = mapAny._latLngBoundsToNewLayerBounds?.(bounds, e.zoom, e.center);
+        if (!newBounds) return; // На случай, если приватный метод пропал в новой версии Leaflet — просто не анимируем этот кадр.
+        // Считаем scale от baseZoomRef (зафиксирован в reset(), соответствует
+        // lastSizeRef), а НЕ от live map.getZoom() — см. комментарий у baseZoomRef.
+        const scale = map.getZoomScale(e.zoom, baseZoomRef.current);
+        applyTransform(newBounds.min!.x, newBounds.min!.y, scale);
+      },
+    }),
+    [map, reset, bounds, applyTransform]
+  );
+
+  useMapEvents(handlers);
 
   return (
     <div
@@ -1205,6 +1236,13 @@ const MapViewInnerComponent = forwardRef<MapViewInnerHandle, MapViewInnerProps>(
   const getAreaName = useCallback((areaId: string): string => {
     return t(`loc_${areaId}` as TranslationKey);
   }, [t]);
+
+  // Подтверждено ли текущее положение area с данным id — используется в
+  // списке "Сменить на:", чтобы показать, подтверждён ли сосед, с которым
+  // произойдёт обмен местами при переключении на занятую им позицию.
+  const isAreaConfirmed = useCallback((areaId: string): boolean => {
+    return !!areaConfirmed.get(areaId);
+  }, [areaConfirmed]);
 
   // Смещение (dx, dy), на которое сейчас сдвинута area относительно своей базовой
   // позиции — используется, чтобы вместе с area двигать и её зону в zonePolygons.
@@ -1918,6 +1956,7 @@ const MapViewInnerComponent = forwardRef<MapViewInnerHandle, MapViewInnerProps>(
                     getPositionLabel={getPositionLabel}
                     positionOccupancy={positionOccupancy}
                     getAreaName={getAreaName}
+                    isAreaConfirmed={isAreaConfirmed}
                     onConfirm={handleConfirmAreaPosition}
                     onSwitch={handleSwitchAreaPosition}
                     rotation={rotation}
@@ -1973,6 +2012,7 @@ const MapViewInnerComponent = forwardRef<MapViewInnerHandle, MapViewInnerProps>(
                     getPositionLabel={getPositionLabel}
                     positionOccupancy={positionOccupancy}
                     getAreaName={getAreaName}
+                    isAreaConfirmed={isAreaConfirmed}
                     onConfirm={handleConfirmAreaPosition}
                     onSwitch={handleSwitchAreaPosition}
                     rotation={getAreaRotation(linkedArea)}
