@@ -55,8 +55,10 @@
             },
             {
                 "id": "center",
-                "x": 22814,
-                "y": 28895
+                "x": 23622,
+                "y": 28391,
+                "verified": true,
+                "rotation": 98
             },
             {
                 "id": "bottom",

@@ -75,8 +75,9 @@
             },
             {
                 "id": "bottom_left",
-                "x": 11898,
-                "y": 34447
+                "x": 12186,
+                "y": 34143,
+                "verified": true
             },
             {
                 "id": "bottom_center",
@@ -319,8 +320,9 @@
             },
             {
                 "id": "bottom_right",
-                "x": 40204,
-                "y": 36509
+                "x": 40016,
+                "y": 36945,
+                "verified": true
             }
         ]
     },
@@ -355,8 +357,9 @@
         "positions": [
             {
                 "id": "top_left",
-                "x": 14951,
-                "y": 19729
+                "x": 15883,
+                "y": 19677,
+                "verified": true
             },
             {
                 "id": "top_center",
@@ -451,8 +454,10 @@
             },
             {
                 "id": "top_right",
-                "x": 37349,
-                "y": 23545
+                "x": 37437,
+                "y": 22665,
+                "rotation": 30,
+                "verified": true
             },
             {
                 "id": "center",
@@ -554,8 +559,10 @@
             },
             {
                 "id": "center",
-                "x": 21738,
-                "y": 25141
+                "x": 23306,
+                "y": 25077,
+                "verified": true,
+                "rotation": 317
             },
             {
                 "id": "bottom_left",
@@ -664,8 +671,9 @@
             },
             {
                 "id": "bottom_center",
-                "x": 28290,
-                "y": 38761
+                "x": 27902,
+                "y": 38953,
+                "verified": true
             },
             {
                 "id": "bottom_right",
