@@ -24,13 +24,6 @@
                 "y": 15014,
                 "text": "box",
                 "group": "box"
-            },
-            {
-                "x": 16186,
-                "y": 14373,
-                "text": "item_box",
-                "group": "box",
-                "onlyAtPositionId": "top_right"
             }
         ],
         "positionId": "top_left",
@@ -51,7 +44,8 @@
                 "id": "right",
                 "x": 41926,
                 "y": 26283,
-                "verified": true
+                "verified": true,
+                "rotation": 15
             },
             {
                 "id": "center",
@@ -63,12 +57,16 @@
             {
                 "id": "bottom",
                 "x": 19974,
-                "y": 38895
+                "y": 38895,
+                "verified": true,
+                "rotation": 90
             },
             {
                 "id": "left",
-                "x": 9238,
-                "y": 28055
+                "x": 10102,
+                "y": 28095,
+                "verified": true,
+                "rotation": 90
             }
         ]
     },
@@ -91,13 +89,6 @@
                 "y": 18312,
                 "text": "box",
                 "group": "box"
-            },
-            {
-                "x": 30122,
-                "y": 19440,
-                "text": "box",
-                "group": "box",
-                "onlyAtPositionId": "top_right"
             },
             {
                 "x": 30856,
@@ -157,13 +148,13 @@
             {
                 "x": 35218,
                 "y": 19634,
-                "text": "item_box",
+                "text": "box",
                 "group": "box"
             },
             {
                 "x": 37166,
                 "y": 21066,
-                "text": "item_box",
+                "text": "box",
                 "group": "box"
             }
         ],
@@ -171,8 +162,10 @@
         "positions": [
             {
                 "id": "top_left",
-                "x": 13440,
-                "y": 13299
+                "x": 12192,
+                "y": 13203,
+                "rotation": 270,
+                "verified": true
             },
             {
                 "id": "top_right",
@@ -182,8 +175,9 @@
             },
             {
                 "id": "right",
-                "x": 40304,
-                "y": 23955
+                "x": 39912,
+                "y": 23251,
+                "verified": true
             },
             {
                 "id": "center",
@@ -194,8 +188,9 @@
             },
             {
                 "id": "bottom",
-                "x": 18672,
-                "y": 38979
+                "x": 17332,
+                "y": 39439,
+                "verified": true
             },
             {
                 "id": "left",
@@ -278,8 +273,10 @@
             },
             {
                 "id": "top_right",
-                "x": 30133,
-                "y": 15941
+                "x": 31913,
+                "y": 17793,
+                "verified": true,
+                "rotation": 346
             },
             {
                 "id": "right",
@@ -368,13 +365,15 @@
             },
             {
                 "id": "top_right",
-                "x": 29630,
-                "y": 16221
+                "x": 31414,
+                "y": 18621,
+                "verified": true
             },
             {
                 "id": "right",
-                "x": 41782,
-                "y": 24565
+                "x": 41762,
+                "y": 24585,
+                "verified": true
             },
             {
                 "id": "center",
@@ -384,13 +383,15 @@
             },
             {
                 "id": "bottom",
-                "x": 19534,
-                "y": 39885
+                "x": 20102,
+                "y": 40645,
+                "verified": true
             },
             {
                 "id": "left",
-                "x": 7806,
-                "y": 27997
+                "x": 8286,
+                "y": 29265,
+                "verified": true
             }
         ]
     },
@@ -455,8 +456,9 @@
         "positions": [
             {
                 "id": "top_left",
-                "x": 14871,
-                "y": 14533
+                "x": 13639,
+                "y": 16501,
+                "verified": true
             },
             {
                 "id": "top_right",
@@ -465,13 +467,17 @@
             },
             {
                 "id": "right",
-                "x": 41623,
-                "y": 24677
+                "x": 41743,
+                "y": 26013,
+                "verified": true,
+                "rotation": 3
             },
             {
                 "id": "center",
-                "x": 22359,
-                "y": 28005
+                "x": 22455,
+                "y": 27805,
+                "rotation": 331,
+                "verified": true
             },
             {
                 "id": "bottom",
@@ -544,21 +550,15 @@
                 "y": 30988,
                 "text": "transistor",
                 "group": "transistor"
-            },
-            {
-                "x": 7288,
-                "y": 28536,
-                "text": "item_box",
-                "group": "box",
-                "onlyAtPositionId": "top_right"
             }
         ],
         "positionId": "left",
         "positions": [
             {
                 "id": "top_left",
-                "x": 14523,
-                "y": 14903
+                "x": 14562,
+                "y": 15035,
+                "verified": true
             },
             {
                 "id": "top_right",
@@ -568,19 +568,22 @@
             },
             {
                 "id": "right",
-                "x": 42356,
-                "y": 24715,
+                "rotation": 286,
+                "x": 42308,
+                "y": 24727,
                 "verified": true
             },
             {
                 "id": "center",
-                "x": 22604,
-                "y": 28391
+                "x": 22724,
+                "y": 28087,
+                "verified": true
             },
             {
                 "id": "bottom",
-                "x": 19499,
-                "y": 39711
+                "x": 18840,
+                "y": 38031,
+                "verified": true
             },
             {
                 "id": "left",

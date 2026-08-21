@@ -59,6 +59,11 @@ const MAP_CONFIG: Record<MapKey, IMapConfig> = {
 // const BASE_URL = 'https://ovgamesdev.github.io/ldoe-bogs';
 const BASE_URL = '/ldoe-bogs';
 
+// Зум, начиная с которого подписи локаций (group === 'location') скрываются —
+// при сильном приближении названия локаций перестают быть нужны (сама
+// локация и так видна на экране целиком) и только загромождают вид.
+const LOCATION_LABEL_MAX_ZOOM = 3;
+
 const ICON_CONFIG: Record<string, [string, number]> = {
   start: ['start.webp', 48],
   boss: ['boss.webp', 32],
@@ -189,6 +194,26 @@ const ViewportPersister: React.FC<{ activeMap: MapKey }> = ({ activeMap }) => {
   return null;
 };
 
+// Отслеживает текущий зум карты — используется, чтобы скрывать подписи
+// локаций (group === 'location') при сильном приближении, см. LOCATION_LABEL_MAX_ZOOM.
+const ZoomTracker: React.FC<{ onZoomChange: (zoom: number) => void }> = ({ onZoomChange }) => {
+  const map = useMap();
+
+  const handlers = useMemo(
+    () => ({
+      zoomend: () => onZoomChange(map.getZoom()),
+    }),
+    [map, onZoomChange]
+  );
+  useMapEvents(handlers);
+
+  useEffect(() => {
+    onZoomChange(map.getZoom());
+  }, [map, onZoomChange]);
+
+  return null;
+};
+
 // Отслеживает границы видимой области карты — используется, чтобы не рендерить
 // AreaOverlay для областей, которых сейчас нет на экране.
 const ViewportTracker: React.FC<{ onBoundsChange: (bounds: L.LatLngBounds) => void }> = ({ onBoundsChange }) => {
@@ -284,7 +309,17 @@ const MarkerItem = React.memo(function MarkerItem({
   );
 
   return (
-    <Marker position={position} icon={icon} draggable={isDev && editMode} eventHandlers={eventHandlers}>
+    <Marker
+      position={position}
+      icon={icon}
+      draggable={isDev && editMode}
+      eventHandlers={eventHandlers}
+      // Leaflet по умолчанию упорядочивает маркеры по Y-координате (кто ниже,
+      // тот и выше по z-index) — подписи локаций от этого могут перекрываться
+      // другими иконками. Большой zIndexOffset гарантирует, что group === 'location'
+      // всегда рисуется поверх всех остальных маркеров.
+      zIndexOffset={marker.group === 'location' ? 10000 : 0}
+    >
       {marker.group !== 'location' && (
         <Popup autoPan autoPanPaddingTopLeft={[16, 70]} autoPanPaddingBottomRight={[16, 100]} maxWidth={280}>
           {renderPopupContent(marker)}
@@ -326,6 +361,9 @@ interface AreaOverlayProps {
   // конкретной позиции (см. MarkerJSON.onlyAtPositionId), когда area стоит на
   // другой позиции. null, если у area вообще нет предустановленных позиций.
   currentPositionId: string | null;
+  // Скрывать ли маркеры group === 'location' (см. LOCATION_LABEL_MAX_ZOOM в
+  // MapViewInnerComponent) — считается по текущему зуму карты.
+  hideLocations: boolean;
 }
 
 const AreaOverlay: React.FC<AreaOverlayProps> = ({
@@ -341,6 +379,7 @@ const AreaOverlay: React.FC<AreaOverlayProps> = ({
   onMarkerDragEnd,
   rotation,
   currentPositionId,
+  hideLocations,
 }) => {
   const bounds = useMemo(
     () =>
@@ -363,8 +402,9 @@ const AreaOverlay: React.FC<AreaOverlayProps> = ({
       area.markers
         .map((m, i) => ({ m, i }))
         .filter(({ m }) => activeFilters.has(m.group))
-        .filter(({ m }) => !m.onlyAtPositionId || m.onlyAtPositionId === currentPositionId),
-    [area.markers, activeFilters, currentPositionId]
+        .filter(({ m }) => !m.onlyAtPositionId || m.onlyAtPositionId === currentPositionId)
+        .filter(({ m }) => !(hideLocations && m.group === 'location')),
+    [area.markers, activeFilters, currentPositionId, hideLocations]
   );
 
   return (
@@ -430,13 +470,14 @@ interface AreaPositionMarkerProps {
   onSwitch: (areaId: string, positionId: string) => void;
   // --- поворот текущей позиции (см. AreaPositionOffset.rotation) ---
   // Эффективный поворот (override игрока, если есть, иначе базовый из areas.json).
+  // Сохраняется как базовый автоматически при экспорте (см. handleExportAreas) —
+  // отдельной кнопки/действия для этого больше нет, т.к. это dev-only сценарий.
   rotation: number;
   isDev: boolean;
-  // Подстройка поворота под то, что видит игрок — доступна и в dev, и в релизе.
+  // Подстройка поворота под данные areas.json при сборе/выверке — только dev
+  // (сама секция в UI скрыта под isDev, см. AreaPositionPopupContent).
   onRotate: (areaId: string, delta: number) => void;
   onResetRotation: (areaId: string) => void;
-  // Только в dev: сохраняет текущий поворот как базовый в areas.json.
-  onSaveRotation?: (areaId: string) => void;
   // Проверены ли дев-ом данные ТЕКУЩЕЙ позиции (AreaPositionOffset.verified) —
   // свойство самих данных, не путать с confirmed (см. комментарий в
   // initial-data.ts). Показываем badge только в dev-режиме.
@@ -464,7 +505,6 @@ interface AreaPositionPopupContentProps {
   isDev: boolean;
   onRotate: (areaId: string, delta: number) => void;
   onResetRotation: (areaId: string) => void;
-  onSaveRotation?: (areaId: string) => void;
   verified: boolean;
   onToggleVerified?: (areaId: string) => void;
 }
@@ -485,7 +525,6 @@ const AreaPositionPopupContent: React.FC<AreaPositionPopupContentProps> = ({
   isDev,
   onRotate,
   onResetRotation,
-  onSaveRotation,
   verified,
   onToggleVerified,
 }) => {
@@ -507,35 +546,36 @@ const AreaPositionPopupContent: React.FC<AreaPositionPopupContentProps> = ({
         </button>
       )}
 
-      <div style={{ borderTop: '1px solid #444', paddingTop: 6, display: 'flex', flexDirection: 'column', gap: 4 }}>
-        <div style={{ fontSize: 12, color: '#999', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <span>{t('rotation_label')}: {rotation}°</span>
-          {rotation !== 0 && (
-            <span style={{ cursor: 'pointer', textDecoration: 'underline' }} onClick={() => onResetRotation(areaId)}>
-              {t('rotation_reset')}
-            </span>
-          )}
+      {/* Поворот текущей позиции — dev-only: подстройка под то, что реально
+          видно в игре, нужна только при сборе/выверке данных areas.json;
+          игрокам сам факт поворота ни на что не влияет, поэтому в релизе
+          не показываем. */}
+      {isDev && (
+        <div style={{ borderTop: '1px solid #444', paddingTop: 6, display: 'flex', flexDirection: 'column', gap: 4 }}>
+          <div style={{ fontSize: 12, color: '#999', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <span>{t('rotation_label')}: {rotation}°</span>
+            {rotation !== 0 && (
+              <span style={{ cursor: 'pointer', textDecoration: 'underline' }} onClick={() => onResetRotation(areaId)}>
+                {t('rotation_reset')}
+              </span>
+            )}
+          </div>
+          <div className="rotation-btn-row">
+            <button className="map-btn map-btn-sm" onClick={() => onRotate(areaId, -90)} title={t('rotate_by_deg', { deg: -90 })}>↺ 90°</button>
+            <button className="map-btn map-btn-sm" onClick={() => onRotate(areaId, -15)} title={t('rotate_by_deg', { deg: -15 })}>-15°</button>
+            <button className="map-btn map-btn-sm" onClick={() => onRotate(areaId, -1)} title={t('rotate_by_deg', { deg: -1 })}>-1°</button>
+            <button className="map-btn map-btn-sm" onClick={() => onRotate(areaId, 1)} title={t('rotate_by_deg', { deg: 1 })}>+1°</button>
+            <button className="map-btn map-btn-sm" onClick={() => onRotate(areaId, 15)} title={t('rotate_by_deg', { deg: 15 })}>+15°</button>
+            <button className="map-btn map-btn-sm" onClick={() => onRotate(areaId, 90)} title={t('rotate_by_deg', { deg: 90 })}>90° ↻</button>
+          </div>
         </div>
-        <div className="rotation-btn-row">
-          <button className="map-btn map-btn-sm" onClick={() => onRotate(areaId, -90)} title={t('rotate_by_deg', { deg: -90 })}>↺ 90°</button>
-          <button className="map-btn map-btn-sm" onClick={() => onRotate(areaId, -15)} title={t('rotate_by_deg', { deg: -15 })}>-15°</button>
-          <button className="map-btn map-btn-sm" onClick={() => onRotate(areaId, -1)} title={t('rotate_by_deg', { deg: -1 })}>-1°</button>
-          <button className="map-btn map-btn-sm" onClick={() => onRotate(areaId, 1)} title={t('rotate_by_deg', { deg: 1 })}>+1°</button>
-          <button className="map-btn map-btn-sm" onClick={() => onRotate(areaId, 15)} title={t('rotate_by_deg', { deg: 15 })}>+15°</button>
-          <button className="map-btn map-btn-sm" onClick={() => onRotate(areaId, 90)} title={t('rotate_by_deg', { deg: 90 })}>90° ↻</button>
-        </div>
-        {isDev && onSaveRotation && (
-          <button className="map-btn" style={{ background: '#6a1b9a', marginBottom: 0 }} onClick={() => onSaveRotation(areaId)}>
-            💾 {t('save_rotation_as_base')}
-          </button>
-        )}
-      </div>
-
+      )}
       {/* Dev-only: точность данных этой позиции (x/y/rotation в areas.json) —
           не путать с confirmed выше (это отдельное состояние игрока про
           текущую позицию area). verified защищает данные от случайной правки:
-          drag area / "Сохранить поворот как базовый" запрашивают подтверждение,
-          если позиция уже помечена проверенной. */}
+          drag area запрашивает подтверждение, если позиция уже помечена
+          проверенной (текущий поворот и так уходит в areas.json при
+          экспорте — см. handleExportAreas). */}
       {isDev && (
         <div style={{ borderTop: '1px solid #444', paddingTop: 6, display: 'flex', flexDirection: 'column', gap: 4 }}>
           <div style={{ fontWeight: 'bold', color: verified ? '#2e7d32' : '#c62828' }}>
@@ -588,7 +628,6 @@ const AreaPositionMarkerComponent: React.FC<AreaPositionMarkerProps> = ({
   isDev,
   onRotate,
   onResetRotation,
-  onSaveRotation,
   verified,
   onToggleVerified,
 }) => {
@@ -633,7 +672,6 @@ const AreaPositionMarkerComponent: React.FC<AreaPositionMarkerProps> = ({
           isDev={isDev}
           onRotate={onRotate}
           onResetRotation={onResetRotation}
-          onSaveRotation={onSaveRotation}
           verified={verified}
           onToggleVerified={onToggleVerified}
         />
@@ -873,9 +911,17 @@ const MapViewInnerComponent = forwardRef<MapViewInnerHandle, MapViewInnerProps>(
   // позиции — по умолчанию берётся из area.positions[currentPositionId].rotation
   // (см. AreaPositionOffset.rotation в initial-data.ts), но игрок может
   // подстроить его под то, что видит в игре (постройки в LDOE иногда
-  // спавнятся повёрнутыми). Ключ — area.id. Хранится в localStorage отдельно
-  // для каждой карты, как и areaPositionOverrides/areaConfirmed выше.
+  // спавнятся повёрнутыми). Ключ — area.id. В отличие от areaPositionOverrides/
+  // areaConfirmed НЕ хранится в localStorage — сбрасывается при перезагрузке
+  // страницы и при смене карты; в dev-режиме подстроенный поворот попадает в
+  // areas.json как базовый прямо при экспорте (см. handleExportAreas).
   const [areaRotationOverrides, setAreaRotationOverrides] = useState<Map<string, number>>(new Map());
+
+  // Текущий зум карты — используется, чтобы скрывать подписи локаций
+  // (group === 'location') при сильном приближении, см. LOCATION_LABEL_MAX_ZOOM
+  // и ZoomTracker.
+  const [currentZoom, setCurrentZoom] = useState(0);
+  const hideLocations = currentZoom > LOCATION_LABEL_MAX_ZOOM;
 
   const config = MAP_CONFIG[activeMap];
 
@@ -921,8 +967,8 @@ const MapViewInnerComponent = forwardRef<MapViewInnerHandle, MapViewInnerProps>(
       setAreaConfirmed(new Map());
       localStorage.setItem(mapStorageKey(activeMap, 'area_confirmed'), JSON.stringify([]));
 
+      // Поворот в localStorage не хранится — просто сбрасываем состояние.
       setAreaRotationOverrides(new Map());
-      localStorage.setItem(mapStorageKey(activeMap, 'area_rotation_overrides'), JSON.stringify([]));
     },
   }), [activeMap]);
 
@@ -996,13 +1042,10 @@ const MapViewInnerComponent = forwardRef<MapViewInnerHandle, MapViewInnerProps>(
     } catch {
       setAreaConfirmed(new Map());
     }
-    try {
-      const saved = JSON.parse(localStorage.getItem(mapStorageKey(activeMap, 'area_rotation_overrides')) || '[]') as [string, number][];
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setAreaRotationOverrides(new Map(saved));
-    } catch {
-      setAreaRotationOverrides(new Map());
-    }
+    // Поворот не персистится — при смене карты просто сбрасываем в пустую
+    // подстройку (эффективный поворот тогда берётся из areas.json).
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setAreaRotationOverrides(new Map());
   }, [activeMap]);
 
   // Подтвердить текущее положение area.
@@ -1051,14 +1094,14 @@ const MapViewInnerComponent = forwardRef<MapViewInnerHandle, MapViewInnerProps>(
     if (occupant) rotationChanged = nextRotationOverrides.delete(occupant.id) || rotationChanged;
     if (rotationChanged) {
       setAreaRotationOverrides(nextRotationOverrides);
-      localStorage.setItem(mapStorageKey(activeMap, 'area_rotation_overrides'), JSON.stringify(Array.from(nextRotationOverrides.entries())));
     }
   }, [activeMap, areas, areaPositionOverrides, areaConfirmed, areaRotationOverrides]);
 
   // Поворачивает area на `delta` градусов относительно ТЕКУЩЕГО эффективного
   // поворота (override, если уже есть, иначе базовый из positions[].rotation).
-  // Доступно и в dev, и в релизе (см. AreaPositionPopupContent) — сохраняется
-  // в localStorage сразу же.
+  // Только dev (UI скрыт под isDev в AreaPositionPopupContent) — только в
+  // рамках текущей сессии, в localStorage не сохраняется (см. комментарий у
+  // areaRotationOverrides выше).
   const handleRotateArea = useCallback((areaId: string, delta: number) => {
     setAreaRotationOverrides((prev) => {
       const area = areas.find((a) => a.id === areaId);
@@ -1067,10 +1110,9 @@ const MapViewInnerComponent = forwardRef<MapViewInnerHandle, MapViewInnerProps>(
       const current = prev.get(areaId) ?? basePos?.rotation ?? 0;
       const next = new Map(prev);
       next.set(areaId, ((current + delta) % 360 + 360) % 360);
-      localStorage.setItem(mapStorageKey(activeMap, 'area_rotation_overrides'), JSON.stringify(Array.from(next.entries())));
       return next;
     });
-  }, [activeMap, areas, areaPositionOverrides]);
+  }, [areas, areaPositionOverrides]);
 
   // Сбрасывает пользовательскую подстройку поворота — area возвращается к
   // базовому повороту своей текущей позиции (как в areas.json).
@@ -1079,55 +1121,19 @@ const MapViewInnerComponent = forwardRef<MapViewInnerHandle, MapViewInnerProps>(
       if (!prev.has(areaId)) return prev;
       const next = new Map(prev);
       next.delete(areaId);
-      localStorage.setItem(mapStorageKey(activeMap, 'area_rotation_overrides'), JSON.stringify(Array.from(next.entries())));
       return next;
     });
-  }, [activeMap]);
+  }, []);
 
   // Проверены ли дев-ом данные ТЕКУЩЕЙ позиции area (AreaPositionOffset.verified) —
   // свойство самих данных из areas.json, не путать с areaConfirmed (состояние
   // игрока в localStorage). Используется и для badge в попапе, и чтобы решить,
-  // нужно ли запрашивать подтверждение перед правкой (см. handleAreaDragEnd,
-  // handleSaveAreaRotation ниже).
+  // нужно ли запрашивать подтверждение перед правкой (см. handleAreaDragEnd).
   const getPositionVerified = useCallback((area: MapAreaConfig): boolean => {
     if (!area.positions) return false;
     const currentPositionId = areaPositionOverrides.get(area.id) ?? area.positionId;
     return !!area.positions.find((p) => p.id === currentPositionId)?.verified;
   }, [areaPositionOverrides]);
-
-  // Dev: сохраняет текущий (возможно, подстроенный) поворот как БАЗОВЫЙ для
-  // текущей позиции area — прямо в состояние areas, откуда его заберёт
-  // handleExportAreas. Локальный override после этого снимаем — новое базовое
-  // значение и так совпадает с тем, что было видно на экране.
-  const handleSaveAreaRotation = useCallback((areaId: string) => {
-    const area = areas.find((a) => a.id === areaId);
-    // Как и в handleAreaDragEnd — правка данных уже проверенной позиции
-    // требует явного подтверждения.
-    if (area && getPositionVerified(area) && !window.confirm(t('confirm_edit_verified_position'))) {
-      return;
-    }
-
-    trackEvent('area_rotation_save', { area: areaId, map: activeMap });
-    setAreas((prev) =>
-      prev.map((a) => {
-        if (a.id !== areaId || !a.positions) return a;
-        const currentPositionId = areaPositionOverrides.get(areaId) ?? a.positionId;
-        const basePos = a.positions.find((p) => p.id === currentPositionId);
-        const rotation = areaRotationOverrides.get(areaId) ?? basePos?.rotation ?? 0;
-        return {
-          ...a,
-          positions: a.positions.map((p) => (p.id === currentPositionId ? { ...p, rotation } : p)),
-        };
-      })
-    );
-    setAreaRotationOverrides((prev) => {
-      if (!prev.has(areaId)) return prev;
-      const next = new Map(prev);
-      next.delete(areaId);
-      localStorage.setItem(mapStorageKey(activeMap, 'area_rotation_overrides'), JSON.stringify(Array.from(next.entries())));
-      return next;
-    });
-  }, [activeMap, areas, areaPositionOverrides, areaRotationOverrides, getPositionVerified, t]);
 
   // Эффективный поворот area на её ТЕКУЩЕЙ позиции: пользовательская подстройка
   // (areaRotationOverrides), если есть, иначе базовый поворот текущей позиции
@@ -1203,6 +1209,12 @@ const MapViewInnerComponent = forwardRef<MapViewInnerHandle, MapViewInnerProps>(
       ...area,
       x: area.x + dx, y: area.y + dy,
       markers: area.markers.map((m) => {
+        // Маркеры group === 'location' (подписи локаций) — только переезжают
+        // вместе с area (dx/dy), но не крутятся вокруг её центра: текст
+        // подписи не должен идти "по кругу" при повороте area.
+        if (m.group === 'location') {
+          return { ...m, x: m.x + dx, y: m.y + dy };
+        }
         const p = rotatePoint(m.x + dx, m.y + dy);
         return { ...m, x: Math.round(p.x), y: Math.round(p.y) };
       }),
@@ -1387,8 +1399,9 @@ const MapViewInnerComponent = forwardRef<MapViewInnerHandle, MapViewInnerProps>(
   const filteredMarkers = useMemo(() => {
     return markers
       .map((m, i) => ({ m, i }))
-      .filter(({ m }) => activeFilters.has(m.group));
-  }, [markers, activeFilters]);
+      .filter(({ m }) => activeFilters.has(m.group))
+      .filter(({ m }) => !(hideLocations && m.group === 'location'));
+  }, [markers, activeFilters, hideLocations]);
 
   const zonesVisible = activeFilters.has('layer_zones' as GroupsKeys);
 
@@ -1575,7 +1588,7 @@ const MapViewInnerComponent = forwardRef<MapViewInnerHandle, MapViewInnerProps>(
         const newMarker: MarkerJSON = {
           x: x - offset.dx,
           y: y - offset.dy,
-          text: newMarkerGroup === 'location' ? 'loc_new' : `item_${newMarkerGroup}`,
+          text: newMarkerGroup === 'location' ? 'loc_new' : `${newMarkerGroup}`,
           group: newMarkerGroup as GroupsKeys,
           angle: 0,
         };
@@ -1593,7 +1606,7 @@ const MapViewInnerComponent = forwardRef<MapViewInnerHandle, MapViewInnerProps>(
       const newMarker: MarkerJSON = {
         x,
         y,
-        text: newMarkerGroup === 'location' ? 'loc_new' : `item_${newMarkerGroup}`,
+        text: newMarkerGroup === 'location' ? 'loc_new' : `${newMarkerGroup}`,
         group: newMarkerGroup as GroupsKeys,
         angle: 0,
       };
@@ -1751,26 +1764,37 @@ const MapViewInnerComponent = forwardRef<MapViewInnerHandle, MapViewInnerProps>(
   // (см. fetch areas.json выше), так что хранить его в файле незачем — только
   // лишние диффы в git при каждом добавлении/удалении маркера.
   const handleExportAreas = useCallback(() => {
-    const cleaned = areas.map((a) => ({
-      ...a,
-      markers: a.markers.map((m) => {
-        const data: MarkerJSON = { ...m };
-        delete data.statusKey;
-        if (!data.angle) delete data.angle;
-        if (!data.icon) delete data.icon;
-        return data;
-      }),
-      // rotation: 0 / verified: false — дефолты, не нужно засорять ими файл.
-      positions: a.positions?.map((p) => {
-        const data: AreaPositionOffset = { ...p };
-        if (!data.rotation) delete data.rotation;
-        if (!data.verified) delete data.verified;
-        return data;
-      }),
-    }));
+    const cleaned = areas.map((a) => {
+      // Текущая (возможно, подстроенная игроком/дев-ом через ↺90°/-15°/...)
+      // позиция area и её поворот. Раньше поворот нужно было отдельно
+      // "Сохранить как базовый" перед экспортом — теперь экспорт сам берёт
+      // live-override (areaRotationOverrides), если он есть, и пишет его как
+      // базовый rotation текущей позиции. Отдельного действия для этого
+      // больше нет: это всё равно только dev-сценарий.
+      const currentPositionId = areaPositionOverrides.get(a.id) ?? a.positionId;
+      const rotationOverride = areaRotationOverrides.get(a.id);
+      return {
+        ...a,
+        markers: a.markers.map((m) => {
+          const data: MarkerJSON = { ...m };
+          delete data.statusKey;
+          if (!data.angle) delete data.angle;
+          if (!data.icon) delete data.icon;
+          return data;
+        }),
+        // rotation: 0 / verified: false — дефолты, не нужно засорять ими файл.
+        positions: a.positions?.map((p) => {
+          const rotation = p.id === currentPositionId && rotationOverride !== undefined ? rotationOverride : p.rotation;
+          const data: AreaPositionOffset = { ...p, rotation };
+          if (!data.rotation) delete data.rotation;
+          if (!data.verified) delete data.verified;
+          return data;
+        }),
+      };
+    });
     const jsonString = JSON.stringify(cleaned, null, 4);
     navigator.clipboard.writeText(jsonString).catch((err) => console.error('Clipboard error:', err));
-  }, [areas]);
+  }, [areas, areaPositionOverrides, areaRotationOverrides]);
 
   // Переносит ВЫДЕЛЕННЫЙ маркер верхнего уровня (markers.json) в area, выбранную
   // в newMarkerAreaTarget — координаты пересчитываются в базовые (см. handleDevMapClick).
@@ -1894,6 +1918,7 @@ const MapViewInnerComponent = forwardRef<MapViewInnerHandle, MapViewInnerProps>(
       >
         <MapEventsHandler activeMap={activeMap} onHoverCoords={onHoverCoords} lastPointRef={lastHoverPointRef} />
         <ViewportTracker onBoundsChange={handleVisibleBoundsChange} />
+        <ZoomTracker onZoomChange={setCurrentZoom} />
         <MapBoundsController activeMap={activeMap} />
         <ViewportPersister activeMap={activeMap} />
         {isDev && <DevMapClickHandler activeMap={activeMap} onMapClick={handleDevMapClick} />}
@@ -1942,6 +1967,7 @@ const MapViewInnerComponent = forwardRef<MapViewInnerHandle, MapViewInnerProps>(
                   onMarkerDragEnd={(idx, e) => handleAreaMarkerDragEnd(area.id, idx, e)}
                   rotation={rotation}
                   currentPositionId={currentPositionId ?? null}
+                  hideLocations={hideLocations}
                 />
                 {showPositionMarker && (
                   <AreaPositionMarker
@@ -1963,7 +1989,6 @@ const MapViewInnerComponent = forwardRef<MapViewInnerHandle, MapViewInnerProps>(
                     isDev={isDev}
                     onRotate={handleRotateArea}
                     onResetRotation={handleResetAreaRotation}
-                    onSaveRotation={isDev ? handleSaveAreaRotation : undefined}
                     verified={verified}
                     onToggleVerified={isDev ? handleToggleAreaVerified : undefined}
                   />
@@ -2019,7 +2044,6 @@ const MapViewInnerComponent = forwardRef<MapViewInnerHandle, MapViewInnerProps>(
                     isDev={isDev}
                     onRotate={handleRotateArea}
                     onResetRotation={handleResetAreaRotation}
-                    onSaveRotation={isDev ? handleSaveAreaRotation : undefined}
                     verified={getPositionVerified(linkedArea)}
                     onToggleVerified={isDev ? handleToggleAreaVerified : undefined}
                   />

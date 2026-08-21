@@ -536,7 +536,13 @@
     {
         "x": 29832,
         "y": 41776,
-        "text": "item_unique_resource",
+        "text": "unique_resource",
         "group": "unique_resource"
+    },
+    {
+        "x": 30122,
+        "y": 19454,
+        "text": "box",
+        "group": "box"
     }
 ]

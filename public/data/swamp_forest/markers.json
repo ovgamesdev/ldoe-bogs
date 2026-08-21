@@ -580,5 +580,17 @@
         "y": 31160,
         "text": "unique_resource",
         "group": "unique_resource"
+    },
+    {
+        "x": 34920,
+        "y": 21104,
+        "text": "unique_resource",
+        "group": "unique_resource"
+    },
+    {
+        "x": 36704,
+        "y": 33296,
+        "text": "unique_resource",
+        "group": "unique_resource"
     }
 ]

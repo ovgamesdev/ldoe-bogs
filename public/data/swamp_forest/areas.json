@@ -60,18 +60,24 @@
             },
             {
                 "id": "top_center",
-                "x": 27568,
-                "y": 14422
+                "x": 26882,
+                "y": 15095,
+                "verified": true,
+                "rotation": 6
             },
             {
                 "id": "top_right",
-                "x": 37528,
-                "y": 23481
+                "x": 37450,
+                "y": 23607,
+                "verified": true,
+                "rotation": 90
             },
             {
                 "id": "center",
-                "x": 21666,
-                "y": 26503
+                "x": 21770,
+                "y": 26543,
+                "verified": true,
+                "rotation": 87
             },
             {
                 "id": "bottom_left",
@@ -86,8 +92,10 @@
             },
             {
                 "id": "bottom_right",
-                "x": 40266,
-                "y": 36567
+                "x": 40298,
+                "y": 37071,
+                "verified": true,
+                "rotation": 75
             }
         ]
     },
@@ -203,8 +211,9 @@
         "positions": [
             {
                 "id": "top_left",
-                "x": 13577,
-                "y": 19191
+                "x": 12141,
+                "y": 18463,
+                "verified": true
             },
             {
                 "id": "top_center",
@@ -214,13 +223,15 @@
             },
             {
                 "id": "top_right",
-                "x": 36097,
-                "y": 21079
+                "x": 36085,
+                "y": 21099,
+                "verified": true
             },
             {
                 "id": "center",
-                "x": 21001,
-                "y": 25847
+                "x": 20769,
+                "y": 25263,
+                "verified": true
             },
             {
                 "id": "bottom_left",
@@ -235,8 +246,9 @@
             },
             {
                 "id": "bottom_right",
-                "x": 39161,
-                "y": 34567
+                "x": 39937,
+                "y": 35179,
+                "verified": true
             }
         ]
     },
@@ -289,13 +301,15 @@
         "positions": [
             {
                 "id": "top_left",
-                "x": 15012,
-                "y": 20005
+                "x": 16088,
+                "y": 19657,
+                "verified": true
             },
             {
                 "id": "top_center",
-                "x": 27572,
-                "y": 14501
+                "x": 26716,
+                "y": 14681,
+                "verified": true
             },
             {
                 "id": "top_right",
@@ -306,17 +320,20 @@
             {
                 "id": "center",
                 "x": 21924,
-                "y": 26861
+                "y": 26861,
+                "verified": true
             },
             {
                 "id": "bottom_left",
-                "x": 11684,
-                "y": 34357
+                "x": 12380,
+                "y": 36665,
+                "verified": true
             },
             {
                 "id": "bottom_center",
-                "x": 28468,
-                "y": 38389
+                "x": 28076,
+                "y": 39237,
+                "verified": true
             },
             {
                 "id": "bottom_right",
@@ -363,13 +380,15 @@
             },
             {
                 "id": "top_center",
-                "x": 27631,
-                "y": 14321
+                "x": 26823,
+                "y": 15549,
+                "verified": true
             },
             {
                 "id": "top_right",
-                "x": 37383,
-                "y": 23473
+                "x": 36947,
+                "y": 23117,
+                "verified": true
             },
             {
                 "id": "center",
@@ -379,13 +398,16 @@
             },
             {
                 "id": "bottom_left",
-                "x": 11679,
-                "y": 34545
+                "x": 11963,
+                "y": 34341,
+                "verified": true,
+                "rotation": 72
             },
             {
                 "id": "bottom_center",
-                "x": 28639,
-                "y": 38593
+                "x": 28203,
+                "y": 38861,
+                "verified": true
             },
             {
                 "id": "bottom_right",
@@ -444,13 +466,17 @@
         "positions": [
             {
                 "id": "top_left",
-                "x": 14917,
-                "y": 20105
+                "x": 14477,
+                "y": 20409,
+                "verified": true,
+                "rotation": 23
             },
             {
                 "id": "top_center",
-                "x": 27853,
-                "y": 14353
+                "x": 25273,
+                "y": 15065,
+                "verified": true,
+                "rotation": 28
             },
             {
                 "id": "top_right",
@@ -461,8 +487,10 @@
             },
             {
                 "id": "center",
-                "x": 22485,
-                "y": 26881
+                "x": 21481,
+                "y": 27301,
+                "verified": true,
+                "rotation": 14
             },
             {
                 "id": "bottom_left",
@@ -479,7 +507,8 @@
                 "id": "bottom_right",
                 "x": 40557,
                 "y": 37025,
-                "rotation": 300
+                "rotation": 300,
+                "verified": true
             }
         ]
     },
@@ -544,18 +573,21 @@
         "positions": [
             {
                 "id": "top_left",
-                "x": 14234,
-                "y": 18837
+                "x": 12650,
+                "y": 18177,
+                "verified": true
             },
             {
                 "id": "top_center",
-                "x": 26970,
-                "y": 12781
+                "x": 26930,
+                "y": 14001,
+                "verified": true
             },
             {
                 "id": "top_right",
-                "x": 37306,
-                "y": 21685
+                "x": 37114,
+                "y": 21473,
+                "verified": true
             },
             {
                 "id": "center",
@@ -577,8 +609,10 @@
             },
             {
                 "id": "bottom_right",
-                "x": 39866,
-                "y": 34645
+                "x": 38800,
+                "y": 33911,
+                "verified": true,
+                "rotation": 342
             }
         ]
     },
@@ -616,29 +650,15 @@
                 "group": "box"
             },
             {
-                "x": 40924,
-                "y": 40015,
-                "text": "item_box_winch",
-                "group": "box_winch",
-                "onlyAtPositionId": "top_center"
-            },
-            {
-                "x": 39960,
-                "y": 39155,
-                "text": "item_box",
-                "group": "box",
-                "onlyAtPositionId": "top_center"
-            },
-            {
                 "x": 43180,
                 "y": 38435,
-                "text": "item_crowbar",
+                "text": "crowbar",
                 "group": "crowbar"
             },
             {
                 "x": 43552,
                 "y": 37511,
-                "text": "item_box",
+                "text": "box",
                 "group": "box"
             }
         ],
@@ -651,23 +671,30 @@
             },
             {
                 "id": "top_center",
-                "x": 26418,
-                "y": 14577
+                "x": 25090,
+                "y": 14953,
+                "verified": true
             },
             {
                 "id": "top_right",
-                "x": 37226,
-                "y": 23881
+                "x": 36980,
+                "y": 23155,
+                "verified": true,
+                "rotation": 270
             },
             {
                 "id": "center",
-                "x": 21514,
-                "y": 26489
+                "x": 21486,
+                "y": 27673,
+                "verified": true,
+                "rotation": 11
             },
             {
                 "id": "bottom_left",
-                "x": 11674,
-                "y": 34681
+                "x": 11810,
+                "y": 34669,
+                "verified": true,
+                "rotation": 314
             },
             {
                 "id": "bottom_center",
