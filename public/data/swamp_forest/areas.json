@@ -500,8 +500,10 @@
             },
             {
                 "id": "bottom_center",
-                "x": 28653,
-                "y": 38625
+                "x": 28449,
+                "y": 38701,
+                "verified": true,
+                "rotation": 30
             },
             {
                 "id": "bottom_right",
@@ -547,7 +549,7 @@
             {
                 "x": 30765,
                 "y": 42136,
-                "text": "may_be_box",
+                "text": "box",
                 "group": "box"
             },
             {
@@ -598,8 +600,10 @@
             },
             {
                 "id": "bottom_left",
-                "x": 10634,
-                "y": 33429
+                "x": 9426,
+                "y": 33125,
+                "verified": true,
+                "rotation": 315
             },
             {
                 "id": "bottom_center",
@@ -666,8 +670,9 @@
         "positions": [
             {
                 "id": "top_left",
-                "x": 14858,
-                "y": 20209
+                "x": 14758,
+                "y": 20701,
+                "verified": true
             },
             {
                 "id": "top_center",

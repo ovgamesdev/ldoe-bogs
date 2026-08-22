@@ -592,5 +592,12 @@
         "y": 33296,
         "text": "unique_resource",
         "group": "unique_resource"
+    },
+    {
+        "x": 27510,
+        "y": 53304,
+        "text": "start",
+        "group": "start",
+        "angle": 45
     }
 ]

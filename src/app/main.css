@@ -95,37 +95,7 @@ body {
 	background: #1a1a1a;
 }
 
-/* Стиль для того, чтобы картинки-иконки выглядели четко */
-.leaflet-marker-icon {
-	image-rendering: pixelated;
-}
-
 /* Стиль для названий локаций */
-.location-title {
-	background: none !important;
-	border: none !important;
-	z-index: 1000 !important;
-}
-
-.location-title div {
-	font-family: 'Russo One', sans-serif;
-	font-size: 20px;
-	font-weight: bold;
-	white-space: nowrap;
-	text-align: center;
-	text-transform: uppercase; /* Делает все буквы заглавными для стиля */
-	color: #ffffff;            /* Белый цвет текста */
-	
-	/* Мощная черная обводка, чтобы текст "читался" на любом тайле карты */
-	text-shadow: 
-			-1px -1px 0 #000,  
-				1px -1px 0 #000,
-			-1px  1px 0 #000,
-				1px  1px 0 #000,
-				0px  2px 4px rgba(0,0,0,0.8); 
-				
-	letter-spacing: 1px;       /* Небольшой отступ между буквами для читаемости */
-}
 
 .leaflet-popup-content-wrapper, .leaflet-popup-tip {
 	background: rgba(255, 255, 255, 0.9);

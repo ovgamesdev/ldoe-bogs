@@ -544,5 +544,12 @@
         "y": 19454,
         "text": "box",
         "group": "box"
+    },
+    {
+        "x": 40816,
+        "y": 40732,
+        "text": "start",
+        "group": "start",
+        "angle": 285
     }
 ]

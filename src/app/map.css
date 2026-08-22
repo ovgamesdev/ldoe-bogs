@@ -36,7 +36,6 @@ body {
 .location-title {
   background: none !important;
   border: none !important;
-  z-index: 650 !important;
 }
 
 .location-title div {
