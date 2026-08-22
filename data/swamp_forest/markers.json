@@ -1,0 +1,603 @@
+[
+    {
+        "x": 30760,
+        "y": 50456,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 27258,
+        "y": 47200,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 30236,
+        "y": 46344,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 32580,
+        "y": 45596,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 42108,
+        "y": 47184,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 46475,
+        "y": 34658,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 39285,
+        "y": 33609,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 42276,
+        "y": 32564,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 41143,
+        "y": 28767,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 45464,
+        "y": 27426,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 43633,
+        "y": 24028,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 39951,
+        "y": 19190,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 37567,
+        "y": 22224,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 36427,
+        "y": 27023,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 37806,
+        "y": 29539,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 34456,
+        "y": 32374,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 33569,
+        "y": 27144,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 33768,
+        "y": 21431,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 32843,
+        "y": 13642,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 30292,
+        "y": 11258,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 26763,
+        "y": 9430,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 26348,
+        "y": 12458,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 22097,
+        "y": 14497,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 24595,
+        "y": 16396,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 28035,
+        "y": 19669,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 27473,
+        "y": 24743,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 23196,
+        "y": 21477,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 20788,
+        "y": 19337,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 13664,
+        "y": 26770,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 20492,
+        "y": 30638,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 25194,
+        "y": 33192,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 28210,
+        "y": 38258,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 35534,
+        "y": 39290,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 23673,
+        "y": 51275,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 19952,
+        "y": 48040,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 18737,
+        "y": 40464,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 21873,
+        "y": 38593,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 9970,
+        "y": 31131,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 23390,
+        "y": 47994,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 17414,
+        "y": 45500,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 15806,
+        "y": 41688,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 22352,
+        "y": 42775,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 24543,
+        "y": 41539,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 28764,
+        "y": 45229,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 28673,
+        "y": 49773,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 32681,
+        "y": 48278,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 38644,
+        "y": 49142,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 40567,
+        "y": 45590,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 37382,
+        "y": 42754,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 46600,
+        "y": 37685,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 38399,
+        "y": 37498,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 41260,
+        "y": 34974,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 37259,
+        "y": 35067,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 33737,
+        "y": 38060,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 31793,
+        "y": 35662,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 28552,
+        "y": 35779,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 19068,
+        "y": 38228,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 23969,
+        "y": 35375,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 31207,
+        "y": 31508,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 29746,
+        "y": 29281,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 39359,
+        "y": 31126,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 45139,
+        "y": 30890,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 42340,
+        "y": 29682,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 17311,
+        "y": 33660,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 11993,
+        "y": 31307,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 11766,
+        "y": 27845,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 17405,
+        "y": 26661,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 13721,
+        "y": 24079,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 19206,
+        "y": 27936,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 23099,
+        "y": 24679,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 25654,
+        "y": 21262,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 25593,
+        "y": 18113,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 22087,
+        "y": 17652,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 18778,
+        "y": 15232,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 31063,
+        "y": 23342,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 35818,
+        "y": 22905,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 35433,
+        "y": 26147,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 41848,
+        "y": 26502,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 41824,
+        "y": 21522,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 45132,
+        "y": 21236,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 38302,
+        "y": 18714,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 35178,
+        "y": 16170,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 30682,
+        "y": 19513,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 28054,
+        "y": 11298,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 23317,
+        "y": 12696,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 11584,
+        "y": 28928,
+        "text": "unique_resource",
+        "group": "unique_resource"
+    },
+    {
+        "x": 21404,
+        "y": 35344,
+        "text": "unique_resource",
+        "group": "unique_resource"
+    },
+    {
+        "x": 23936,
+        "y": 46216,
+        "text": "unique_resource",
+        "group": "unique_resource"
+    },
+    {
+        "x": 35904,
+        "y": 37872,
+        "text": "unique_resource",
+        "group": "unique_resource"
+    },
+    {
+        "x": 40360,
+        "y": 42184,
+        "text": "unique_resource",
+        "group": "unique_resource"
+    },
+    {
+        "x": 32366,
+        "y": 11624,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 25080,
+        "y": 11880,
+        "text": "unique_resource",
+        "group": "unique_resource"
+    },
+    {
+        "x": 26314,
+        "y": 22298,
+        "text": "unique_resource",
+        "group": "unique_resource"
+    },
+    {
+        "x": 23024,
+        "y": 39768,
+        "text": "unique_resource",
+        "group": "unique_resource"
+    },
+    {
+        "x": 27656,
+        "y": 32592,
+        "text": "unique_resource",
+        "group": "unique_resource"
+    },
+    {
+        "x": 31336,
+        "y": 31924,
+        "text": "unique_resource",
+        "group": "unique_resource"
+    },
+    {
+        "x": 16608,
+        "y": 31160,
+        "text": "unique_resource",
+        "group": "unique_resource"
+    },
+    {
+        "x": 34920,
+        "y": 21104,
+        "text": "unique_resource",
+        "group": "unique_resource"
+    },
+    {
+        "x": 36704,
+        "y": 33296,
+        "text": "unique_resource",
+        "group": "unique_resource"
+    },
+    {
+        "x": 27510,
+        "y": 53304,
+        "text": "start",
+        "group": "start",
+        "angle": 45
+    }
+]

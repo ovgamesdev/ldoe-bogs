@@ -1,0 +1,555 @@
+[
+    {
+        "x": 42078,
+        "y": 34318,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 46954,
+        "y": 31318,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 43108,
+        "y": 23956,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 39506,
+        "y": 27346,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 29296,
+        "y": 41484,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 30900,
+        "y": 45076,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 26534,
+        "y": 47974,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 28104,
+        "y": 39112,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 27772,
+        "y": 36354,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 33603,
+        "y": 34148,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 30670,
+        "y": 32326,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 36180,
+        "y": 25001,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 43830,
+        "y": 20608,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 36840,
+        "y": 15382,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 34490,
+        "y": 14768,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 28370,
+        "y": 15368,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 28660,
+        "y": 17086,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 26584,
+        "y": 22176,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 30165,
+        "y": 28441,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 14862,
+        "y": 35400,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 12250,
+        "y": 27354,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 9729,
+        "y": 27257,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 18950,
+        "y": 24150,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 23986,
+        "y": 24996,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 22704,
+        "y": 22462,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 23003,
+        "y": 12529,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 28196,
+        "y": 10714,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 26364,
+        "y": 8444,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 26630,
+        "y": 49656,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 28870,
+        "y": 48586,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 26600,
+        "y": 44466,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 14142,
+        "y": 37980,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 16955,
+        "y": 36059,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 19688,
+        "y": 34062,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 21138,
+        "y": 31882,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 12472,
+        "y": 33580,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 6388,
+        "y": 29576,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 7872,
+        "y": 26108,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 9312,
+        "y": 24024,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 13516,
+        "y": 24952,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 16664,
+        "y": 25396,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 18148,
+        "y": 26872,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 19010,
+        "y": 29442,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 11112,
+        "y": 22189,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 15198,
+        "y": 22622,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 20982,
+        "y": 21310,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 25436,
+        "y": 20520,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 29330,
+        "y": 26060,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 31106,
+        "y": 23790,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 34258,
+        "y": 26064,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 31764,
+        "y": 30624,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 35526,
+        "y": 29826,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 38306,
+        "y": 29506,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 35418,
+        "y": 32518,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 36284,
+        "y": 35160,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 34854,
+        "y": 37668,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 30975,
+        "y": 40131,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 29912,
+        "y": 37838,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 26800,
+        "y": 34790,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 34404,
+        "y": 41630,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 40212,
+        "y": 33418,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 43772,
+        "y": 31802,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 45732,
+        "y": 23920,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 39982,
+        "y": 25288,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 44309,
+        "y": 22162,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 39576,
+        "y": 18830,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 37078,
+        "y": 18554,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 38482,
+        "y": 15676,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 32096,
+        "y": 15620,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 28940,
+        "y": 12882,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 26738,
+        "y": 13620,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 24632,
+        "y": 15318,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 28204,
+        "y": 18196,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 21132,
+        "y": 13794,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 21366,
+        "y": 10446,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 23774,
+        "y": 9588,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 28288,
+        "y": 8152,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 25816,
+        "y": 6328,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 30808,
+        "y": 7012,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 30864,
+        "y": 9822,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 21336,
+        "y": 25676,
+        "text": "box_winch",
+        "group": "box_winch"
+    },
+    {
+        "x": 33320,
+        "y": 43880,
+        "text": "unique_resource",
+        "group": "unique_resource"
+    },
+    {
+        "x": 19976,
+        "y": 36040,
+        "text": "unique_resource",
+        "group": "unique_resource"
+    },
+    {
+        "x": 33428,
+        "y": 33808,
+        "text": "unique_resource",
+        "group": "unique_resource"
+    },
+    {
+        "x": 34240,
+        "y": 30176,
+        "text": "unique_resource",
+        "group": "unique_resource"
+    },
+    {
+        "x": 38616,
+        "y": 29952,
+        "text": "unique_resource",
+        "group": "unique_resource"
+    },
+    {
+        "x": 14608,
+        "y": 23752,
+        "text": "unique_resource",
+        "group": "unique_resource"
+    },
+    {
+        "x": 27392,
+        "y": 16752,
+        "text": "unique_resource",
+        "group": "unique_resource"
+    },
+    {
+        "x": 27040,
+        "y": 23064,
+        "text": "unique_resource",
+        "group": "unique_resource"
+    },
+    {
+        "x": 29832,
+        "y": 41776,
+        "text": "unique_resource",
+        "group": "unique_resource"
+    },
+    {
+        "x": 30122,
+        "y": 19454,
+        "text": "box",
+        "group": "box"
+    },
+    {
+        "x": 40816,
+        "y": 40732,
+        "text": "start",
+        "group": "start",
+        "angle": 285
+    }
+]

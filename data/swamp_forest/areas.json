@@ -1,0 +1,718 @@
+[
+    {
+        "id": "corn_bed",
+        "tilePath": "/tiles/swamp_forest/area_corn_bed/lod{z}.webp",
+        "x": 14933,
+        "y": 20037,
+        "width": 4220,
+        "height": 4163,
+        "markers": [
+            {
+                "x": 16872,
+                "y": 20600,
+                "text": "loc_corn_bed",
+                "group": "location"
+            },
+            {
+                "x": 16672,
+                "y": 21444,
+                "text": "unique_resource",
+                "group": "unique_resource"
+            },
+            {
+                "x": 17156,
+                "y": 22464,
+                "text": "unique_resource",
+                "group": "unique_resource"
+            },
+            {
+                "x": 15710,
+                "y": 21830,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 16300,
+                "y": 22300,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 15908,
+                "y": 22946,
+                "text": "crowbar",
+                "group": "crowbar"
+            },
+            {
+                "x": 17344,
+                "y": 23380,
+                "text": "box",
+                "group": "box"
+            }
+        ],
+        "positionId": "top_left",
+        "positions": [
+            {
+                "id": "top_left",
+                "x": 14933,
+                "y": 20037,
+                "verified": true
+            },
+            {
+                "id": "top_center",
+                "x": 26882,
+                "y": 15095,
+                "verified": true,
+                "rotation": 6
+            },
+            {
+                "id": "top_right",
+                "x": 37450,
+                "y": 23607,
+                "verified": true,
+                "rotation": 90
+            },
+            {
+                "id": "center",
+                "x": 21770,
+                "y": 26543,
+                "verified": true,
+                "rotation": 87
+            },
+            {
+                "id": "bottom_left",
+                "x": 12186,
+                "y": 34143,
+                "verified": true
+            },
+            {
+                "id": "bottom_center",
+                "x": 28210,
+                "y": 38495
+            },
+            {
+                "id": "bottom_right",
+                "x": 40298,
+                "y": 37071,
+                "verified": true,
+                "rotation": 75
+            }
+        ]
+    },
+    {
+        "id": "houses",
+        "tilePath": "/tiles/swamp_forest/area_houses/lod{z}.webp",
+        "x": 26068,
+        "y": 13422,
+        "width": 7182,
+        "height": 6514,
+        "markers": [
+            {
+                "x": 29632,
+                "y": 13776,
+                "text": "loc_houses",
+                "group": "location"
+            },
+            {
+                "x": 29878,
+                "y": 14824,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 28160,
+                "y": 16600,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 28313,
+                "y": 17211,
+                "text": "box_winch",
+                "group": "box_winch"
+            },
+            {
+                "x": 27852,
+                "y": 18266,
+                "text": "barrier",
+                "group": "barrier",
+                "angle": 331
+            },
+            {
+                "x": 28344,
+                "y": 18714,
+                "text": "barrier",
+                "group": "barrier",
+                "angle": 286
+            },
+            {
+                "x": 29170,
+                "y": 18960,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 29569,
+                "y": 18718,
+                "text": "box_winch",
+                "group": "box_winch"
+            },
+            {
+                "x": 29786,
+                "y": 17728,
+                "text": "door_winch",
+                "group": "door_winch"
+            },
+            {
+                "x": 30244,
+                "y": 17940,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 30601,
+                "y": 16610,
+                "text": "box_winch",
+                "group": "box_winch"
+            },
+            {
+                "x": 30917,
+                "y": 15431,
+                "text": "barrier",
+                "group": "barrier",
+                "angle": 135
+            },
+            {
+                "x": 31323,
+                "y": 16854,
+                "text": "axe",
+                "group": "axe"
+            },
+            {
+                "x": 31604,
+                "y": 17492,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 32230,
+                "y": 16818,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 31146,
+                "y": 18014,
+                "text": "box",
+                "group": "box"
+            }
+        ],
+        "positionId": "top_center",
+        "positions": [
+            {
+                "id": "top_left",
+                "x": 12141,
+                "y": 18463,
+                "verified": true
+            },
+            {
+                "id": "top_center",
+                "x": 26068,
+                "y": 13422,
+                "verified": true
+            },
+            {
+                "id": "top_right",
+                "x": 36085,
+                "y": 21099,
+                "verified": true
+            },
+            {
+                "id": "center",
+                "x": 20769,
+                "y": 25263,
+                "verified": true
+            },
+            {
+                "id": "bottom_left",
+                "x": 8841,
+                "y": 32983,
+                "rotation": 322
+            },
+            {
+                "id": "bottom_center",
+                "x": 26969,
+                "y": 36999
+            },
+            {
+                "id": "bottom_right",
+                "x": 39937,
+                "y": 35179,
+                "verified": true
+            }
+        ]
+    },
+    {
+        "id": "sprout_bed",
+        "tilePath": "/tiles/swamp_forest/area_sprout_bed/lod{z}.webp",
+        "x": 37528,
+        "y": 23481,
+        "width": 4280,
+        "height": 4535,
+        "markers": [
+            {
+                "x": 39920,
+                "y": 23296,
+                "text": "loc_sprout_bed",
+                "group": "location"
+            },
+            {
+                "x": 39245,
+                "y": 24171,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 40596,
+                "y": 25072,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 40330,
+                "y": 25598,
+                "text": "door_winch",
+                "group": "door_winch"
+            },
+            {
+                "x": 41236,
+                "y": 25999,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 39358,
+                "y": 26554,
+                "text": "unique_resource",
+                "group": "unique_resource"
+            }
+        ],
+        "positionId": "top_right",
+        "positions": [
+            {
+                "id": "top_left",
+                "x": 16088,
+                "y": 19657,
+                "verified": true
+            },
+            {
+                "id": "top_center",
+                "x": 26716,
+                "y": 14681,
+                "verified": true
+            },
+            {
+                "id": "top_right",
+                "x": 37528,
+                "y": 23481,
+                "verified": true
+            },
+            {
+                "id": "center",
+                "x": 21924,
+                "y": 26861,
+                "verified": true
+            },
+            {
+                "id": "bottom_left",
+                "x": 12380,
+                "y": 36665,
+                "verified": true
+            },
+            {
+                "id": "bottom_center",
+                "x": 28076,
+                "y": 39237,
+                "verified": true
+            },
+            {
+                "id": "bottom_right",
+                "x": 40016,
+                "y": 36945,
+                "verified": true
+            }
+        ]
+    },
+    {
+        "id": "alligators",
+        "tilePath": "/tiles/swamp_forest/area_alligators/lod{z}.webp",
+        "x": 21760,
+        "y": 26877,
+        "width": 4194,
+        "height": 4319,
+        "markers": [
+            {
+                "x": 23808,
+                "y": 26600,
+                "text": "loc_alligators",
+                "group": "location"
+            },
+            {
+                "x": 23858,
+                "y": 27153,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 23738,
+                "y": 28819,
+                "text": "box",
+                "group": "box"
+            }
+        ],
+        "positionId": "center",
+        "positions": [
+            {
+                "id": "top_left",
+                "x": 15883,
+                "y": 19677,
+                "verified": true
+            },
+            {
+                "id": "top_center",
+                "x": 26823,
+                "y": 15549,
+                "verified": true
+            },
+            {
+                "id": "top_right",
+                "x": 36947,
+                "y": 23117,
+                "verified": true
+            },
+            {
+                "id": "center",
+                "x": 21760,
+                "y": 26877,
+                "verified": true
+            },
+            {
+                "id": "bottom_left",
+                "x": 11963,
+                "y": 34341,
+                "verified": true,
+                "rotation": 72
+            },
+            {
+                "id": "bottom_center",
+                "x": 28203,
+                "y": 38861,
+                "verified": true
+            },
+            {
+                "id": "bottom_right",
+                "x": 40167,
+                "y": 36457
+            }
+        ]
+    },
+    {
+        "id": "ash_storage",
+        "tilePath": "/tiles/swamp_forest/area_ash_storage/lod{z}.webp",
+        "x": 11802,
+        "y": 34525,
+        "width": 3975,
+        "height": 4255,
+        "markers": [
+            {
+                "x": 13872,
+                "y": 34512,
+                "text": "loc_ash_storage",
+                "group": "location"
+            },
+            {
+                "x": 13078,
+                "y": 36024,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 14050,
+                "y": 35160,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 14025,
+                "y": 36055,
+                "text": "crowbar",
+                "group": "crowbar"
+            },
+            {
+                "x": 14924,
+                "y": 36588,
+                "text": "barrier",
+                "group": "barrier",
+                "angle": 199
+            },
+            {
+                "x": 14286,
+                "y": 38126,
+                "text": "box",
+                "group": "box"
+            }
+        ],
+        "positionId": "bottom_left",
+        "positions": [
+            {
+                "id": "top_left",
+                "x": 14477,
+                "y": 20409,
+                "verified": true,
+                "rotation": 23
+            },
+            {
+                "id": "top_center",
+                "x": 25273,
+                "y": 15065,
+                "verified": true,
+                "rotation": 28
+            },
+            {
+                "id": "top_right",
+                "x": 37437,
+                "y": 22665,
+                "rotation": 30,
+                "verified": true
+            },
+            {
+                "id": "center",
+                "x": 21481,
+                "y": 27301,
+                "verified": true,
+                "rotation": 14
+            },
+            {
+                "id": "bottom_left",
+                "x": 11802,
+                "y": 34525,
+                "verified": true
+            },
+            {
+                "id": "bottom_center",
+                "x": 28449,
+                "y": 38701,
+                "verified": true,
+                "rotation": 30
+            },
+            {
+                "id": "bottom_right",
+                "x": 40557,
+                "y": 37025,
+                "rotation": 300,
+                "verified": true
+            }
+        ]
+    },
+    {
+        "id": "antimony_extractor",
+        "tilePath": "/tiles/swamp_forest/area_antimony_extractor/lod{z}.webp",
+        "x": 27598,
+        "y": 37207,
+        "width": 6572,
+        "height": 7127,
+        "markers": [
+            {
+                "x": 30112,
+                "y": 37552,
+                "text": "loc_antimony_extractor",
+                "group": "location"
+            },
+            {
+                "x": 28674,
+                "y": 40610,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 28676,
+                "y": 40936,
+                "text": "door_winch",
+                "group": "door_winch"
+            },
+            {
+                "x": 30450,
+                "y": 38884,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 30765,
+                "y": 42136,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 31716,
+                "y": 40730,
+                "text": "axe",
+                "group": "axe"
+            },
+            {
+                "x": 32050,
+                "y": 40248,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 32670,
+                "y": 41112,
+                "text": "box",
+                "group": "box"
+            }
+        ],
+        "positionId": "bottom_center",
+        "positions": [
+            {
+                "id": "top_left",
+                "x": 12650,
+                "y": 18177,
+                "verified": true
+            },
+            {
+                "id": "top_center",
+                "x": 26930,
+                "y": 14001,
+                "verified": true
+            },
+            {
+                "id": "top_right",
+                "x": 37114,
+                "y": 21473,
+                "verified": true
+            },
+            {
+                "id": "center",
+                "x": 23306,
+                "y": 25077,
+                "verified": true,
+                "rotation": 317
+            },
+            {
+                "id": "bottom_left",
+                "x": 9426,
+                "y": 33125,
+                "verified": true,
+                "rotation": 315
+            },
+            {
+                "id": "bottom_center",
+                "x": 27598,
+                "y": 37207,
+                "verified": true
+            },
+            {
+                "id": "bottom_right",
+                "x": 38800,
+                "y": 33911,
+                "verified": true,
+                "rotation": 342
+            }
+        ]
+    },
+    {
+        "id": "ash_sawmill",
+        "tilePath": "/tiles/swamp_forest/area_ash_sawmill/lod{z}.webp",
+        "x": 40490,
+        "y": 36876,
+        "width": 4444,
+        "height": 4111,
+        "markers": [
+            {
+                "x": 43024,
+                "y": 36640,
+                "text": "loc_ash_sawmill",
+                "group": "location"
+            },
+            {
+                "x": 41512,
+                "y": 39856,
+                "text": "barrier",
+                "group": "barrier",
+                "angle": 309
+            },
+            {
+                "x": 42016,
+                "y": 38078,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 42374,
+                "y": 40428,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 43180,
+                "y": 38435,
+                "text": "crowbar",
+                "group": "crowbar"
+            },
+            {
+                "x": 43552,
+                "y": 37511,
+                "text": "box",
+                "group": "box"
+            }
+        ],
+        "positionId": "bottom_right",
+        "positions": [
+            {
+                "id": "top_left",
+                "x": 14758,
+                "y": 20701,
+                "verified": true
+            },
+            {
+                "id": "top_center",
+                "x": 25090,
+                "y": 14953,
+                "verified": true
+            },
+            {
+                "id": "top_right",
+                "x": 36980,
+                "y": 23155,
+                "verified": true,
+                "rotation": 270
+            },
+            {
+                "id": "center",
+                "x": 21486,
+                "y": 27673,
+                "verified": true,
+                "rotation": 11
+            },
+            {
+                "id": "bottom_left",
+                "x": 11810,
+                "y": 34669,
+                "verified": true,
+                "rotation": 314
+            },
+            {
+                "id": "bottom_center",
+                "x": 27902,
+                "y": 38953,
+                "verified": true
+            },
+            {
+                "id": "bottom_right",
+                "x": 40490,
+                "y": 36876,
+                "verified": true
+            }
+        ]
+    }
+]

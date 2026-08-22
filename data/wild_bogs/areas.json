@@ -1,0 +1,599 @@
+[
+    {
+        "id": "alligators",
+        "tilePath": "/tiles/wild_bogs/area_alligators/lod{z}.webp",
+        "x": 17480,
+        "y": 14636,
+        "width": 4037,
+        "height": 4354,
+        "markers": [
+            {
+                "x": 19712,
+                "y": 14512,
+                "text": "loc_alligators",
+                "group": "location"
+            },
+            {
+                "x": 19386,
+                "y": 16658,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 19554,
+                "y": 15014,
+                "text": "box",
+                "group": "box"
+            }
+        ],
+        "positionId": "top_left",
+        "positions": [
+            {
+                "id": "top_left",
+                "x": 17480,
+                "y": 14636,
+                "verified": true
+            },
+            {
+                "id": "top_right",
+                "x": 31718,
+                "y": 19527,
+                "verified": true
+            },
+            {
+                "id": "right",
+                "x": 41926,
+                "y": 26283,
+                "verified": true,
+                "rotation": 15
+            },
+            {
+                "id": "center",
+                "x": 23622,
+                "y": 28391,
+                "verified": true,
+                "rotation": 98
+            },
+            {
+                "id": "bottom",
+                "x": 19974,
+                "y": 38895,
+                "verified": true,
+                "rotation": 90
+            },
+            {
+                "id": "left",
+                "x": 10102,
+                "y": 28095,
+                "verified": true,
+                "rotation": 90
+            }
+        ]
+    },
+    {
+        "id": "tent_camp",
+        "tilePath": "/tiles/wild_bogs/area_tent_camp/lod{z}.webp",
+        "x": 28834,
+        "y": 15697,
+        "width": 9248,
+        "height": 7770,
+        "markers": [
+            {
+                "x": 31824,
+                "y": 15168,
+                "text": "loc_tent_camp",
+                "group": "location"
+            },
+            {
+                "x": 29672,
+                "y": 18312,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 30856,
+                "y": 18622,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 32432,
+                "y": 16980,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 33722,
+                "y": 18356,
+                "text": "c4",
+                "group": "c4"
+            },
+            {
+                "x": 34206,
+                "y": 17884,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 31982,
+                "y": 21420,
+                "text": "barrier",
+                "group": "barrier",
+                "angle": 315
+            },
+            {
+                "x": 34344,
+                "y": 22324,
+                "text": "transistor",
+                "group": "transistor"
+            },
+            {
+                "x": 34040,
+                "y": 21708,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 33546,
+                "y": 21010,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 34246,
+                "y": 20582,
+                "text": "transistor",
+                "group": "transistor"
+            },
+            {
+                "x": 35218,
+                "y": 19634,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 37166,
+                "y": 21066,
+                "text": "box",
+                "group": "box"
+            }
+        ],
+        "positionId": "top_right",
+        "positions": [
+            {
+                "id": "top_left",
+                "x": 12192,
+                "y": 13203,
+                "rotation": 270,
+                "verified": true
+            },
+            {
+                "id": "top_right",
+                "x": 28834,
+                "y": 15697,
+                "verified": true
+            },
+            {
+                "id": "right",
+                "x": 39912,
+                "y": 23251,
+                "verified": true
+            },
+            {
+                "id": "center",
+                "x": 20680,
+                "y": 26003,
+                "rotation": 352,
+                "verified": true
+            },
+            {
+                "id": "bottom",
+                "x": 17332,
+                "y": 39439,
+                "verified": true
+            },
+            {
+                "id": "left",
+                "x": 5872,
+                "y": 24531,
+                "verified": true
+            }
+        ]
+    },
+    {
+        "id": "sulfur_extractor",
+        "tilePath": "/tiles/wild_bogs/area_sulfur_extractor/lod{z}.webp",
+        "x": 42036,
+        "y": 24119,
+        "width": 5622,
+        "height": 5911,
+        "markers": [
+            {
+                "x": 44528,
+                "y": 23248,
+                "text": "loc_sulfur_extractor",
+                "group": "location"
+            },
+            {
+                "x": 42808,
+                "y": 26906,
+                "text": "door_winch",
+                "group": "door_winch"
+            },
+            {
+                "x": 43064,
+                "y": 27082,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 43578,
+                "y": 25500,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 44766,
+                "y": 25259,
+                "text": "crowbar",
+                "group": "crowbar"
+            },
+            {
+                "x": 44908,
+                "y": 24684,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 44510,
+                "y": 28306,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 47210,
+                "y": 27156,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 46742,
+                "y": 27861,
+                "text": "c4",
+                "group": "c4"
+            }
+        ],
+        "positionId": "right",
+        "positions": [
+            {
+                "id": "top_left",
+                "x": 14525,
+                "y": 14013,
+                "rotation": 345
+            },
+            {
+                "id": "top_right",
+                "x": 31913,
+                "y": 17793,
+                "verified": true,
+                "rotation": 346
+            },
+            {
+                "id": "right",
+                "x": 42036,
+                "y": 24119,
+                "verified": true
+            },
+            {
+                "id": "center",
+                "x": 23189,
+                "y": 27101,
+                "verified": true,
+                "rotation": 350
+            },
+            {
+                "id": "bottom",
+                "x": 19277,
+                "y": 37357,
+                "verified": true
+            },
+            {
+                "id": "left",
+                "x": 8629,
+                "y": 27173,
+                "verified": true,
+                "rotation": 353
+            }
+        ]
+    },
+    {
+        "id": "lead_extractor",
+        "tilePath": "/tiles/wild_bogs/area_lead_extractor/lod{z}.webp",
+        "x": 22739,
+        "y": 27776,
+        "width": 5092,
+        "height": 5926,
+        "markers": [
+            {
+                "x": 25408,
+                "y": 27744,
+                "text": "loc_lead_extractor",
+                "group": "location"
+            },
+            {
+                "x": 24282,
+                "y": 29744,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 25800,
+                "y": 29460,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 25494,
+                "y": 31220,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 25594,
+                "y": 31612,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 26696,
+                "y": 32396,
+                "text": "door_winch",
+                "group": "door_winch"
+            },
+            {
+                "x": 26362,
+                "y": 31914,
+                "text": "box",
+                "group": "box"
+            }
+        ],
+        "positionId": "center",
+        "positions": [
+            {
+                "id": "top_left",
+                "x": 17302,
+                "y": 12997,
+                "verified": true
+            },
+            {
+                "id": "top_right",
+                "x": 31414,
+                "y": 18621,
+                "verified": true
+            },
+            {
+                "id": "right",
+                "x": 41762,
+                "y": 24585,
+                "verified": true
+            },
+            {
+                "id": "center",
+                "x": 22739,
+                "y": 27776,
+                "verified": true
+            },
+            {
+                "id": "bottom",
+                "x": 20102,
+                "y": 40645,
+                "verified": true
+            },
+            {
+                "id": "left",
+                "x": 8286,
+                "y": 29265,
+                "verified": true
+            }
+        ]
+    },
+    {
+        "id": "peat_quarry",
+        "tilePath": "/tiles/wild_bogs/area_peat_quarry/lod{z}.webp",
+        "x": 19779,
+        "y": 39226,
+        "width": 5235,
+        "height": 4951,
+        "markers": [
+            {
+                "x": 22768,
+                "y": 39072,
+                "text": "loc_peat_quarry",
+                "group": "location"
+            },
+            {
+                "x": 20592,
+                "y": 41158,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 21028,
+                "y": 41279,
+                "text": "crowbar",
+                "group": "crowbar"
+            },
+            {
+                "x": 21422,
+                "y": 40906,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 21790,
+                "y": 41018,
+                "text": "door_winch",
+                "group": "door_winch"
+            },
+            {
+                "x": 23548,
+                "y": 39978,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 23280,
+                "y": 43112,
+                "text": "unique_resource",
+                "group": "unique_resource"
+            },
+            {
+                "x": 22834,
+                "y": 42626,
+                "text": "box",
+                "group": "box"
+            }
+        ],
+        "positionId": "bottom",
+        "positions": [
+            {
+                "id": "top_left",
+                "x": 13639,
+                "y": 16501,
+                "verified": true
+            },
+            {
+                "id": "top_right",
+                "x": 30671,
+                "y": 18165,
+                "verified": true
+            },
+            {
+                "id": "right",
+                "x": 41743,
+                "y": 26013,
+                "verified": true,
+                "rotation": 3
+            },
+            {
+                "id": "center",
+                "x": 22455,
+                "y": 27805,
+                "rotation": 331,
+                "verified": true
+            },
+            {
+                "id": "bottom",
+                "x": 19779,
+                "y": 39226,
+                "verified": true
+            },
+            {
+                "id": "left",
+                "x": 7767,
+                "y": 28917,
+                "rotation": 5,
+                "verified": true
+            }
+        ]
+    },
+    {
+        "id": "broken_extractor",
+        "tilePath": "/tiles/wild_bogs/area_broken_extractor/lod{z}.webp",
+        "x": 8635,
+        "y": 28063,
+        "width": 5962,
+        "height": 4994,
+        "markers": [
+            {
+                "x": 10367,
+                "y": 28064,
+                "text": "loc_broken_extractor",
+                "group": "location"
+            },
+            {
+                "x": 10717,
+                "y": 29378,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 10626,
+                "y": 31592,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 11137,
+                "y": 32294,
+                "text": "barrier",
+                "group": "barrier",
+                "angle": 308
+            },
+            {
+                "x": 12093,
+                "y": 30372,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 13531,
+                "y": 29870,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 13673,
+                "y": 30732,
+                "text": "box",
+                "group": "box"
+            },
+            {
+                "x": 12955,
+                "y": 30988,
+                "text": "transistor",
+                "group": "transistor"
+            }
+        ],
+        "positionId": "left",
+        "positions": [
+            {
+                "id": "top_left",
+                "x": 14562,
+                "y": 15035,
+                "verified": true
+            },
+            {
+                "id": "top_right",
+                "x": 31776,
+                "y": 19051,
+                "verified": true
+            },
+            {
+                "id": "right",
+                "rotation": 286,
+                "x": 42308,
+                "y": 24727,
+                "verified": true
+            },
+            {
+                "id": "center",
+                "x": 22724,
+                "y": 28087,
+                "verified": true
+            },
+            {
+                "id": "bottom",
+                "x": 18840,
+                "y": 38031,
+                "verified": true
+            },
+            {
+                "id": "left",
+                "x": 8684,
+                "y": 28111,
+                "verified": true
+            }
+        ]
+    }
+]
